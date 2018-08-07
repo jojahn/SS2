@@ -1,0 +1,15 @@
+C:\Users\Jonas\source\repos\ss2\ss2\bin\Debug\ss2.exe.config
+C:\Users\Jonas\source\repos\ss2\ss2\bin\Debug\ss2.exe
+C:\Users\Jonas\source\repos\ss2\ss2\bin\Debug\ss2.pdb
+C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\ss2.csprojAssemblyReference.cache
+C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\MainWindow.g.cs
+C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\App.g.cs
+C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\ss2_MarkupCompile.cache
+C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\ss2_MarkupCompile.lref
+C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\MainWindow.baml
+C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\ss2.g.resources
+C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\ss2.Properties.Resources.resources
+C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\ss2.csproj.GenerateResource.cache
+C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\ss2.csproj.CoreCompileInputs.cache
+C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\ss2.exe
+C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\ss2.pdb
