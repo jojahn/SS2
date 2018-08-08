@@ -52,11 +52,11 @@ namespace ss2
             Console.WriteLine(gs);
 
             InitializeComponent();
-            loadVars();
+            initialize();
 
         }
 
-        private void loadVars()
+        private void initialize()
         {
             for (int i = 0; i < matrixSize; i++)
             {
@@ -86,7 +86,6 @@ namespace ss2
                     }
                 }
             }
-
         }
 
         private void resetClick(object sender, RoutedEventArgs e) {
@@ -139,6 +138,34 @@ namespace ss2
             rect.Fill = tertierBrush;
         }
 
+        private void LeftMouseDown_Event(object sender, EventArgs e)
+        {
+            try
+            {
+                this.DragMove();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private void startHacking(object sender, EventArgs e)
+        {
+            TextBox rect = (TextBox)this.FindName("statusReport");
+            Button start = (Button)this.FindName("startButton");
+            Button reset = (Button)this.FindName("resetButton");
+
+            rect.Visibility = Visibility.Collapsed;
+            start.Visibility = Visibility.Collapsed;
+            reset.Visibility = Visibility.Visible;
+            reset.IsEnabled = true;
+        }
+
+        private void exit(object sender, EventArgs e) {
+            Close();
+        }
+
         public class Controller
         {
 
@@ -154,6 +181,11 @@ namespace ss2
                 gs.setNode(nEv.getRow(), nEv.getColumn());
                 Console.WriteLine(gs);
             }
+        }
+
+        private void dragWindowEvent(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
         }
     }
 

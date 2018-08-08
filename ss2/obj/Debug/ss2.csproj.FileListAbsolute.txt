@@ -13,3 +13,4 @@ C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\ss2.csproj.GenerateResource.cache
 C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\ss2.csproj.CoreCompileInputs.cache
 C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\ss2.exe
 C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\ss2.pdb
+C:\Users\Jonas\source\repos\ss2\ss2\obj\Debug\App.baml

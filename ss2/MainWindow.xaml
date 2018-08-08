@@ -4,20 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ss2"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Background="Transparent"
         mc:Ignorable="d"
-        Title="MainWindow" Height="320" Width="190">
-    <Grid Width="180" Height="280">
+        Title="SS2" Height="400" Width="250" ResizeMode="NoResize">
+    <Grid Width="250" Height="400">
         <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\Jonas\source\repos\ss2\ss2\HackPanel.png" Stretch="UniformToFill"/>
+            <ImageBrush ImageSource="C:\Users\Jonas\source\repos\ss2\ss2\template_background.png" Stretch="UniformToFill"/>
         </Grid.Background>
-        <Grid HorizontalAlignment="Left" Height="123" Margin="10,38,0,0" VerticalAlignment="Top" Width="160">
-            <Button x:Name="button02" Content="0,2" HorizontalAlignment="Left" Margin="66,9,0,0" VerticalAlignment="Top" Width="10" Height="10" Click="button02Click" Background="#FF4E9588"/>
-            <Rectangle x:Name="edge0" Fill="#FF4E9588" HorizontalAlignment="Left" Height="4" Margin="78,12,0,0" VerticalAlignment="Top" Width="13" RenderTransformOrigin="0.449,1.562"/>
-            <Button x:Name="button03" Content="0,3" HorizontalAlignment="Left" Margin="94,9,0,0" VerticalAlignment="Top" Width="10" Height="10" Click="button03Click" Background="#FF4E9588" RenderTransformOrigin="-1.45,0.308"/>
-            <Button x:Name="resetButton" Content="R&#xD;&#xA;E&#xD;&#xA;S&#xD;&#xA;E&#xD;&#xA;T" HorizontalAlignment="Left" Margin="138,181,0,-110" VerticalAlignment="Top" Width="20" Height="52" Click="resetClick" Background="#FF4E9588" FontSize="14" Foreground="#FFFFF4F4"/>
-            <Button x:Name="button04" Content="0,4" HorizontalAlignment="Left" Margin="123,9,0,0" VerticalAlignment="Top" Width="10" Height="10" Click="button04Click" Background="#FF4E9588" RenderTransformOrigin="2.5,1.45"/>
-            <Rectangle x:Name="edge1" Fill="#FF4E9588" HorizontalAlignment="Left" Height="4" Margin="107,12,0,0" VerticalAlignment="Top" Width="13" RenderTransformOrigin="0.449,1.562"/>
+        <Grid HorizontalAlignment="Left" Height="159" Margin="22,63,0,0" VerticalAlignment="Top" Width="183">
+            <Button x:Name="button02" Cursor="Hand" Content="" HorizontalAlignment="Left" Margin="83,6,0,0" VerticalAlignment="Top" Width="13" Height="13" Click="button02Click" Background="#FF4E9588" RenderTransformOrigin="2.3,0"/>
+            <Rectangle x:Name="edge0" Cursor="Hand" Fill="#FF4E9588" HorizontalAlignment="Left" Height="4" Margin="101,10,0,0" VerticalAlignment="Top" Width="17" RenderTransformOrigin="0.449,1.562"/>
+            <Button x:Name="button03" Cursor="Hand" Content="" HorizontalAlignment="Left" Margin="123,6,0,0" VerticalAlignment="Top" Width="13" Height="13" Click="button03Click" Background="#FF4E9588" RenderTransformOrigin="-1.45,0.308"/>
+            <Button x:Name="button04" Content="" HorizontalAlignment="Left" Margin="164,6,0,0" VerticalAlignment="Top" Width="13" Height="13" Click="button04Click" Background="#FF4E9588" RenderTransformOrigin="2.5,1.45"/>
+            <Rectangle x:Name="edge1" Fill="#FF4E9588" HorizontalAlignment="Left" Height="4" Margin="141,10,0,0" VerticalAlignment="Top" Width="18" RenderTransformOrigin="0.449,1.562"/>
+            <TextBox x:Name="statusReport" TextAlignment="Center" HorizontalAlignment="Left" Height="56" Margin="5,40,0,0" TextWrapping="Wrap" Text="Click Start To Proceed" VerticalAlignment="Top" Width="168" Background="#FF012B1F" BorderBrush="#FF00FFB4" Foreground="#FF02FEB3" BorderThickness="2" FontFamily="Lucida Console" FontSize="16" IsReadOnly="True" FontStretch="Condensed" Padding="10,9,10,10" Style="{DynamicResource TextBoxStyleNew}"/>
         </Grid>
+        <Button x:Name="resetButton" Style="{StaticResource MyButtonStyle}" IsEnabled="False" Cursor="Hand" Content="R&#xD;&#xA;E&#xD;&#xA;S&#xD;&#xA;E&#xD;&#xA;T" HorizontalAlignment="Left" Margin="213,317,0,0" VerticalAlignment="Top" Width="20" Height="68" Click="resetClick" Background="#FF4E9588" FontSize="14" Foreground="#FFFFF4F4"/>
+        <Button x:Name="startButton" Click="startHacking" Style="{StaticResource MyButtonStyle}" Cursor="Hand" Content="S&#xD;&#xA;T&#xD;&#xA;A&#xD;&#xA;R&#xD;&#xA;T" HorizontalAlignment="Left" Margin="213,317,0,0" VerticalAlignment="Top" Width="20" Height="68" Background="#FF4E9588" FontSize="14" Foreground="#FFFFF4F4"/>
+
+        <Button x:Name="closeButton" Cursor="Hand" Style="{StaticResource MyButtonStyle}" Content="" HorizontalAlignment="Left" Margin="223,16,0,0" VerticalAlignment="Top" Width="17" Click="exit" Height="18" Background="#00DDDDDD" BorderBrush="#0A707070"/>
+        <Rectangle x:Name="MoveButton" Cursor="Hand" Fill="#00F4F4F5" HorizontalAlignment="Left" Height="139" Margin="221,39,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="21" MouseDown="dragWindowEvent"/>
 
     </Grid>
 </Window>
