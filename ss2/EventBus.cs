@@ -33,7 +33,6 @@ namespace ss2
             }
             List<onEvent> list = subscribers[type];
             list.Add(listener);
-            //Console.WriteLine("---> subscribed "+subscribers.ToString());
         }
 
         public void publish(EventObject ev)
@@ -46,10 +45,8 @@ namespace ss2
                 for (int i = 0; i < list.Count() && i < 10; i++)
                 {
                     list[i](ev);
-                    Console.WriteLine("---> published i ");
                 }
             }
-            Console.WriteLine("---> published "+ev.GetType());
         }
     }
 
@@ -116,6 +113,35 @@ namespace ss2
     {
         public ResetEvent() : base("reset")
         {
+        }
+    }
+
+    public class WinEvent : EventObject
+    {
+        private bool win;
+
+        public WinEvent(bool win) : base(win)
+        {
+            this.win = win;
+        }
+
+        public bool isWin()
+        {
+            return this.win;
+        }
+    }
+
+    public class NodeFailEvent : NodeClickEvent
+    {
+        private bool Ice;
+        
+        public NodeFailEvent(int row, int column, bool Ice) : base(row, column)
+        {
+            this.Ice = Ice;
+        }
+
+        public bool isIce() {
+            return Ice;
         }
     }
 }

@@ -11,6 +11,7 @@ namespace ss2
         private Node[,] nodes = new Node[3, 3];
         private List<Edge> edges;
         private int matrixSize;
+        public static double skillChance = 0.6;
         EventBus eventBus = EventBus.getEventBus();
 
         private int clickedNodes = 0;
@@ -38,6 +39,9 @@ namespace ss2
 
         private void reset(EventObject ev) {
             Console.WriteLine("//// reset: " + ev + " ////");
+            foreach (Edge e in edges){
+                e.resetStatus();
+            }
             initialize(matrixSize);
         }
 
@@ -53,20 +57,58 @@ namespace ss2
                 return;
             }
 
+            Node myNode = nodes[row, column];
+
+            if (new Random().Next() > myNode.getChance())
+            {
+                //Console.WriteLine("---> FAILED");
+                //eventBus.publish(new NodeFailEvent(row, column, myNode.isIce()));
+                //return;
+            }
+
             List<Node> list = FindNeighboursByNode(row, column);
             foreach (Node node in list)
             {
                 if (node.getStatus())
                 {
-                    Edge e = findEdgeByNodes(nodes[row, column], node);
+                    Edge e = findEdgeByNodes(myNode, node);
                     e.setStatus();
                     eventBus.publish(new EdgeSetEvent(e.getNumber()));
                 }
             }
 
-            nodes[row, column].setStatus();
+            myNode.setStatus();
 
             clickedNodes++;
+            findWin();
+        }
+
+        public void findWin() {
+            for (int i = 0; i < matrixSize; i++) {
+                List<Node> row = new List<Node>();
+                for (int j = 0; j < matrixSize; j++) {
+                    Node n = nodes[i, j];
+                    if (n.getStatus()){
+                            if ((j < matrixSize - 1 && j > 0) && nodes[i, j - 1].getStatus() && nodes[i, j + 1].getStatus())
+                            {
+                                if (findEdgeByNodes(nodes[i, j - 1], nodes[i, j]) != null && findEdgeByNodes(nodes[i, j + 1], nodes[i, j]) != null)
+                                {
+                                    eventBus.publish(new WinEvent(true));
+                                    return;
+                                }
+                            }
+
+                        if ((i < matrixSize - 1 && i > 0) && nodes[i - 1, j].getStatus() && nodes[i + 1, j].getStatus())
+                        {
+                            if (findEdgeByNodes(nodes[i - 1, j], nodes[i, j]) != null && findEdgeByNodes(nodes[i + 1, j], nodes[i, j]) != null)
+                            {
+                                eventBus.publish(new WinEvent(true));
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public override string ToString()
@@ -148,7 +190,8 @@ namespace ss2
     public class Node
     {
         private bool status;
-        private bool trap;
+        private bool ice;
+        private double chance;
 
         private int row;
         private int column;
@@ -156,7 +199,9 @@ namespace ss2
         public Node(int row, int column)
         {
             status = false;
-            trap = false;
+            ice = false;
+            this.chance = GameState.skillChance;
+            this.chance = chance;
             this.row = row;
             this.column = column;
         }
@@ -171,14 +216,14 @@ namespace ss2
             status = true;
         }
 
-        public bool isTrap()
+        public bool isIce()
         {
-            return trap;
+            return ice;
         }
 
-        public void setTrap()
+        public void setIce()
         {
-            trap = true;
+            ice = true;
         }
 
         public int getColumn()
@@ -189,6 +234,11 @@ namespace ss2
         public int getRow()
         {
             return row;
+        }
+
+        public double getChance()
+        {
+            return this.chance;
         }
 
         public override string ToString()
@@ -244,6 +294,11 @@ namespace ss2
         public void setStatus()
         {
             this.status = true;
+        }
+
+        public void resetStatus()
+        {
+            this.status = false;
         }
 
         public int getNumber()
