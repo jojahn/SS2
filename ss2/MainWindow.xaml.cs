@@ -24,12 +24,14 @@ namespace ss2
         private const int matrixSize = 5;
         private const int edgeCount = 15;
 
-        private static Color secondaryColor = (Color)ColorConverter.ConvertFromString("#47877b");
-        private static SolidColorBrush secondaryBrush = new SolidColorBrush(secondaryColor);
-        private static Color primaryColor = (Color)ColorConverter.ConvertFromString("#42f4df");
-        private static SolidColorBrush primaryBrush = new SolidColorBrush(primaryColor);
-        private static Color tertierColor = (Color)ColorConverter.ConvertFromString("#ed9421");
-        private static SolidColorBrush tertierBrush = new SolidColorBrush(tertierColor);
+        private static Color cyan = (Color)ColorConverter.ConvertFromString("#068C68");
+        private static SolidColorBrush cyanBrush = new SolidColorBrush(cyan);
+        private static Color lightCyan = (Color)ColorConverter.ConvertFromString("#0DFAC1");
+        private static SolidColorBrush lightCyanBrush = new SolidColorBrush(lightCyan);
+        private static Color orange = (Color)ColorConverter.ConvertFromString("#E9840E");
+        private static SolidColorBrush orangeBrush = new SolidColorBrush(orange);
+        private static Color darkCyan = (Color)ColorConverter.ConvertFromString("#00412F");
+        private static SolidColorBrush darkCyanBrush = new SolidColorBrush(darkCyan);
 
         List<Rectangle> rectangles;
         Button[,] buttons;
@@ -43,7 +45,7 @@ namespace ss2
             EventBus eventBus = EventBus.getEventBus();
             eventBus.subscribe(new EdgeSetEvent(-1).GetType(), setEdge);
             eventBus.subscribe(new NodeClickEvent(-1, -1).GetType(), eventMethod);
-            eventBus.subscribe(new NodeFailEvent(-1, -1, false).GetType(), failNode);
+            eventBus.subscribe(new NodeSetEvent(-1, -1, false, false).GetType(), setNode);
             eventBus.subscribe(new WinEvent(true).GetType(), winGame);
 
             rectangles = new List<Rectangle>();
@@ -121,7 +123,7 @@ namespace ss2
 
             foreach (Rectangle rect in rectangles)
             {
-                rect.Fill = secondaryBrush;
+                rect.Fill = cyanBrush;
             }
 
             for (int i = 0; i < buttons.GetLength(0); i++)
@@ -130,7 +132,7 @@ namespace ss2
                 {
                     Button btn = buttons[i, j];
                     if (btn != null)
-                        btn.Background = secondaryBrush;
+                        btn.Background = cyanBrush;
                 }
             }
             eventBus.publish(new ResetEvent());
@@ -144,25 +146,28 @@ namespace ss2
             int column = Int32.Parse(str.ToCharArray()[1].ToString());
 
             eventBus.publish(new NodeClickEvent(row, column));
-            btn.Background = primaryBrush;
+        }
+
+        private void setNode(EventObject ev) {
+            NodeSetEvent nEv = (NodeSetEvent)ev;
+            Button btn = (Button)this.FindName("button" + nEv.getRow() + nEv.getColumn());
+            if (nEv.isSuccess())
+            {
+                btn.Background = lightCyanBrush;
+            }
+            else {
+                btn.Background = darkCyanBrush;
+                if (nEv.isIce()) {
+                    failGame();
+                }
+            }
         }
 
         private void setEdge(EventObject ev) {
             Console.WriteLine("//// setEdge: "+ev+" ////");
             EdgeSetEvent eEv = (EdgeSetEvent)ev;
             Rectangle rect = (Rectangle)this.FindName("edge"+eEv.getNumber());
-            rect.Fill = tertierBrush;
-        }
-
-        private void setFailNode(int row, int column, bool isIce) {
-            Button btn = (Button)this.FindName("button" + row + column);
-            if (isIce)
-            {
-                failGame();
-            }
-            else {
-                btn.Background = secondaryBrush;
-            }
+            rect.Fill = orangeBrush;
         }
 
         public void winGame(EventObject ev) {
@@ -220,16 +225,6 @@ namespace ss2
             NodeClickEvent nEv = (NodeClickEvent)ev;
             Console.WriteLine("//// row=" + nEv.getRow() + ", column=" + nEv.getColumn() + " ////");
             gs.setNode(nEv.getRow(), nEv.getColumn());
-            Console.WriteLine(gs);
-        }
-
-        public void failNode(EventObject ev)
-        {
-            Console.WriteLine("//// " + ev.getMessage() + " ////");
-            NodeFailEvent nFv = (NodeFailEvent)ev;
-            Console.WriteLine("//// row=" + nFv.getRow() + ", column=" + nFv.getColumn() + " ////");
-            setFailNode(nFv.getRow(), nFv.getColumn(), nFv.isIce());
-
             Console.WriteLine(gs);
         }
 

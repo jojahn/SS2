@@ -131,17 +131,23 @@ namespace ss2
         }
     }
 
-    public class NodeFailEvent : NodeClickEvent
+    public class NodeSetEvent : NodeClickEvent
     {
-        private bool Ice;
-        
-        public NodeFailEvent(int row, int column, bool Ice) : base(row, column)
+        private bool ice;
+        private bool success;
+
+        public NodeSetEvent(int row, int column, bool ice, bool success) : base(row, column)
         {
-            this.Ice = Ice;
+            this.ice = ice;
+            this.success = success;
         }
 
         public bool isIce() {
-            return Ice;
+            return this.ice;
+        }
+
+        public bool isSuccess() {
+            return this.success;
         }
     }
 }

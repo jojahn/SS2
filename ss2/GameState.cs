@@ -12,7 +12,8 @@ namespace ss2
         private List<Edge> edges;
         private int matrixSize;
         public static double skillChance = 0.6;
-        EventBus eventBus = EventBus.getEventBus();
+        private EventBus eventBus = EventBus.getEventBus();
+        private Random rng = new Random();
 
         private int clickedNodes = 0;
 
@@ -47,6 +48,8 @@ namespace ss2
 
         public void setNode(int row, int column)
         {
+            bool success = false;
+
             if (row > matrixSize - 1 || column > matrixSize - 1)
             {
                 return;
@@ -59,31 +62,33 @@ namespace ss2
 
             Node myNode = nodes[row, column];
 
-            if (new Random().Next() > myNode.getChance())
-            {
-                //Console.WriteLine("---> FAILED");
-                //eventBus.publish(new NodeFailEvent(row, column, myNode.isIce()));
-                //return;
-            }
 
-            List<Node> list = FindNeighboursByNode(row, column);
-            foreach (Node node in list)
+            if (((double)rng.Next(0, 101) / 100.0) > myNode.getChance())
             {
-                if (node.getStatus())
+                Console.WriteLine("---> FAILED");
+                success = false;
+            }
+            else {
+                success = true;
+                myNode.setStatus();
+                List<Node> list = FindNeighboursByNode(row, column);
+                foreach (Node node in list)
                 {
-                    Edge e = findEdgeByNodes(myNode, node);
-                    e.setStatus();
-                    eventBus.publish(new EdgeSetEvent(e.getNumber()));
+                    if (node.getStatus())
+                    {
+                        Edge e = findEdgeByNodes(myNode, node);
+                        e.setStatus();
+                        eventBus.publish(new EdgeSetEvent(e.getNumber()));
+                    }
                 }
             }
 
-            myNode.setStatus();
-
             clickedNodes++;
-            findWin();
+            eventBus.publish(new NodeSetEvent(row, column, myNode.isIce(), success));
+            checkForGameEndingState();
         }
 
-        public void findWin() {
+        public void checkForGameEndingState() {
             for (int i = 0; i < matrixSize; i++) {
                 List<Node> row = new List<Node>();
                 for (int j = 0; j < matrixSize; j++) {

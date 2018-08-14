@@ -14,7 +14,7 @@
         <Grid.Background>
             <ImageBrush ImageSource="C:\Users\Jonas\source\repos\ss2\ss2\template_background.png" Stretch="UniformToFill"/>
         </Grid.Background>
-        <Grid HorizontalAlignment="Left" Height="159" Margin="22,63,0,0" VerticalAlignment="Top" Width="183">
+        <Grid HorizontalAlignment="Left" Height="159" Margin="22,63,0,0" VerticalAlignment="Top" Width="183" Grid.ColumnSpan="3">
             <Button x:Name="button02" Cursor="Hand" Content="" HorizontalAlignment="Left" Margin="83,6,0,0" VerticalAlignment="Top" Width="13" Height="13" Click="nodeClick" Background="#FF4E9588" RenderTransformOrigin="2.3,0"/>
             <Rectangle x:Name="edge0" Cursor="Hand" Fill="#FF4E9588" HorizontalAlignment="Left" Height="4" Margin="101,10,0,0" VerticalAlignment="Top" Width="17" RenderTransformOrigin="0.449,1.562"/>
             <Button x:Name="button03" Cursor="Hand" Content="" HorizontalAlignment="Left" Margin="123,6,0,0" VerticalAlignment="Top" Width="13" Height="13" Click="nodeClick" Background="#FF4E9588" RenderTransformOrigin="-1.45,0.308"/>
@@ -47,12 +47,17 @@
             <TextBox x:Name="statusReport" TextAlignment="Center" HorizontalAlignment="Left" Height="56" Margin="6,43,0,0" TextWrapping="Wrap" Text="Click Start To Proceed" VerticalAlignment="Top" Width="168" Background="#FF012B1F" BorderBrush="#FF00FFB4" Foreground="#FF02FEB3" BorderThickness="2" FontFamily="Lucida Console" FontSize="16" IsReadOnly="True" FontStretch="Condensed" Padding="10,9,10,10" Style="{DynamicResource TextBoxStyleNew}"/>
             <TextBox x:Name="loseReport" Visibility="Hidden" TextAlignment="Center" HorizontalAlignment="Left" Height="56" Margin="6,43,0,0" TextWrapping="Wrap" Text="You Lost" VerticalAlignment="Top" Width="168" Background="#FF012B1F" BorderBrush="#FF00FFB4" Foreground="#FF02FEB3" BorderThickness="2" FontFamily="Lucida Console" FontSize="16" IsReadOnly="True" FontStretch="Condensed" Padding="10,9,10,10" Style="{DynamicResource TextBoxStyleNew}"/>
             <TextBox x:Name="winReport" Visibility="Hidden" TextAlignment="Center" HorizontalAlignment="Left" Height="56" Margin="6,43,0,0" TextWrapping="Wrap" Text="You Won" VerticalAlignment="Top" Width="168" Background="#FF012B1F" BorderBrush="#FF00FFB4" Foreground="#FF02FEB3" BorderThickness="2" FontFamily="Lucida Console" FontSize="16" IsReadOnly="True" FontStretch="Condensed" Padding="10,9,10,10" Style="{DynamicResource TextBoxStyleNew}"/>
+            <Label Content="60%" HorizontalAlignment="Left" Margin="-4,3,0,0" VerticalAlignment="Top" FontFamily="Lucida Console" FontSize="14" Foreground="#FF2FD1A5"/>
         </Grid>
         <Button x:Name="resetButton" Style="{StaticResource MyButtonStyle}" IsEnabled="False" Cursor="Hand" Content="R&#xD;&#xA;E&#xD;&#xA;S&#xD;&#xA;E&#xD;&#xA;T" HorizontalAlignment="Left" Margin="213,317,0,0" VerticalAlignment="Top" Width="20" Height="68" Click="resetClick" Background="#FF4E9588" FontSize="14" Foreground="#FFFFF4F4"/>
         <Button x:Name="startButton" Click="startHacking" Style="{StaticResource MyButtonStyle}" Cursor="Hand" Content="S&#xD;&#xA;T&#xD;&#xA;A&#xD;&#xA;R&#xD;&#xA;T" HorizontalAlignment="Left" Margin="213,317,0,0" VerticalAlignment="Top" Width="20" Height="68" Background="#FF4E9588" FontSize="14" Foreground="#FFFFF4F4"/>
 
-        <Button x:Name="closeButton" Cursor="Hand" Style="{StaticResource MyButtonStyle}" Content="" HorizontalAlignment="Left" Margin="223,16,0,0" VerticalAlignment="Top" Width="17" Click="exit" Height="18" Background="#00DDDDDD" BorderBrush="#0A707070"/>
-        <Rectangle x:Name="MoveButton" Cursor="Hand" Fill="#00F4F4F5" HorizontalAlignment="Left" Height="139" Margin="221,39,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="21" MouseDown="dragWindowEvent"/>
+        <Button x:Name="closeButton" Cursor="Hand" Style="{StaticResource MyButtonStyle}" Content="" HorizontalAlignment="Left" Margin="219,11,0,0" VerticalAlignment="Top" Width="25" Click="exit" Height="23" Background="#00DDDDDD" BorderBrush="#0A707070"/>
+        <Rectangle x:Name="MoveButton1" Cursor="Hand" Fill="#00F4F4F5" HorizontalAlignment="Left" Height="134" Margin="215,39,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="29" MouseDown="dragWindowEvent"/>
+        <Rectangle x:Name="MoveButton2" Cursor="Hand" Fill="#00F4F4F5" HorizontalAlignment="Left" Height="207" Margin="238,183,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="12" MouseDown="dragWindowEvent"/>
+        <Rectangle x:Name="MoveButton3" Cursor="Hand" Fill="#00F4F4F5" HorizontalAlignment="Left" Height="11" Margin="10,0,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="230" MouseDown="dragWindowEvent" Grid.ColumnSpan="3"/>
+        <Rectangle x:Name="MoveButton4" Cursor="Hand" Fill="#00F4F4F5" HorizontalAlignment="Left" Height="10" Margin="10,390,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="230" MouseDown="dragWindowEvent" Grid.ColumnSpan="3"/>
+        <Rectangle x:Name="MoveButton5" Cursor="Hand" Fill="#00F4F4F5" HorizontalAlignment="Left" Height="380" Margin="0,10,0,0" Stroke="#00000000" VerticalAlignment="Top" Width="12" MouseDown="dragWindowEvent"/>
 
     </Grid>
 </Window>
