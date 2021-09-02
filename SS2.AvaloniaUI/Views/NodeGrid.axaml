@@ -12,16 +12,54 @@
     <vm:NodeGridViewModel />
   </Design.DataContext>
   -->
-  
-  <Grid ColumnDefinitions="100,1.5*,4*" RowDefinitions="Auto,Auto,Auto"  Margin="4">
-    <ItemsControl Items="{Binding Items}">
-      <ItemsControl.ItemTemplate>
-        <DataTemplate>
-          <Button Classes="node" Grid.Row="{Binding Position.Y}" Grid.Column="{Binding Position.X}">
+ 
+  <StackPanel>
+    <!-- <Grid ShowGridLines="True" Background="Orange" Width="120" Height="150" ColumnDefinitions="30,30,30,30" RowDefinitions="30,30,30,30,30"  Margin="4">
+      <TextBlock  Grid.Row="1" Grid.Column="2" Text="4" Grid.RowSpan="2" Grid.ColumnSpan="2"></TextBlock>
+    </Grid> -->
+    <StackPanel.Styles>
+      <Style Selector="ItemsControl /template/ ContentPresenter">
+        <Setter Property="Grid.Row" Value="1"></Setter>
+        <Setter Property="Background" Value="Red"></Setter>
+        <Setter Property="Width" Value="100"></Setter>
+      </Style>
+      <Style Selector="ItemsControl.ItemTemplate /template/ ContentPresenter">
+        <Setter Property="Grid.Row" Value="1"></Setter>
+        <Setter Property="Background" Value="Red"></Setter>
+        <Setter Property="Width" Value="100"></Setter>
+      </Style>
+      <Style Selector="DataTemplate /template/ ContentPresenter">
+        <Setter Property="Grid.Row" Value="1"></Setter>
+        <Setter Property="Background" Value="Red"></Setter>
+        <Setter Property="Width" Value="100"></Setter>
+      </Style>
+      <Style Selector="TextBlock.myTextBlockClass /template/ ContentPresenter">
+        <Setter Property="Grid.Row" Value="1"></Setter>
+        <Setter Property="Background" Value="Red"></Setter>
+        <Setter Property="Width" Value="100"></Setter>
+      </Style>
+      <Style Selector="Grid#MyGrid /template/ ContentPresenter">
+        <Setter Property="Grid.Row" Value="1"></Setter>
+        <Setter Property="Background" Value="Red"></Setter>
+        <Setter Property="Width" Value="100"></Setter>
+      </Style>
+    </StackPanel.Styles>
+      <ItemsControl Name="MyItemsControl" Items="{Binding Items}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <Grid Name="MyGrid" Width="150" Height="120" ColumnDefinitions="32,32,32,32,32" RowDefinitions="34,34,34,34"  Margin="4">
+          </Grid>
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <!-- <TextBlock Classes="myTextBlockClass" Grid.Row="2" Grid.Column="3" Text="_" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            </TextBlock> -->
+            <Button Classes="node" Grid.Row="3" Grid.Column="{Binding X}" Content="{Binding X}">
             <Button.Styles>
               <Style Selector="Button.node">
-                <Setter Property="Height" Value="20"></Setter>
-                <Setter Property="Width" Value="20"></Setter>
+                <Setter Property="Height" Value="16"></Setter>
+                <Setter Property="Width" Value="16"></Setter>
                 <Setter Property="Cursor" Value="Hand"></Setter>
                 <Setter Property="Background">
                   <Setter.Value>
@@ -57,5 +95,6 @@
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
-  </Grid>
+  </StackPanel>
+
 </UserControl>

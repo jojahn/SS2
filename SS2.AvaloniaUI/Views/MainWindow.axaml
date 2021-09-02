@@ -55,10 +55,10 @@
 
   <Panel Name="MainPanel" Background="{DynamicResource Background}">
     <StackPanel Name="ItemContainer">
-      <Panel Classes="Side">
+      <Panel Classes="Side" Height="28">
         <TextBlock Classes="screen" Text="{Binding Greeting}"/>
       </Panel>
-      <Panel Name="GridPanel">
+      <Panel Name="GridPanel" Margin="2 0 18 0">
         <uc:NodeGrid DataContext="{Binding MyNodeGrid}"></uc:NodeGrid>
       </Panel>
       <Panel Name="ControlPanel">

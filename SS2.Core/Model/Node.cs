@@ -13,6 +13,11 @@ namespace SS2.Core.Model
 
         public Vector2 Position { get; }
 
+        public int X { get; }
+        public string Y { get; }
+
+        public int YA = 10;
+
         public bool IsICE { get; }
 
 
@@ -22,6 +27,8 @@ namespace SS2.Core.Model
         {
             Id = Guid.NewGuid();
             Position = new Vector2(x, y);
+            X = (int)x;
+            Y = y.ToString();
             Chance = chance;
             IsICE = isICE;
         }
@@ -30,6 +37,8 @@ namespace SS2.Core.Model
         {
             Id = Guid.NewGuid();
             Position = position;
+            X = (int)position.X;
+            Y = position.Y.ToString();
             Chance = chance;
             IsICE = isICE;
         }
