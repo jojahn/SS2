@@ -1,0 +1,71 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SS2.AvaloniaUI.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
+        xmlns:uc="clr-namespace:SS2.AvaloniaUI.Views;assembly=SS2.AvaloniaUI"
+        x:Class="SS2.AvaloniaUI.Views.MainWindow"
+        Icon="avares://SS2.AvaloniaUI/Assets/Icon.ico"
+        
+        Height="300"
+        Width="200"
+        MaxHeight="300"
+        MaxWidth="200"
+        MinHeight="300"
+        MinWidth="200"
+        CanResize="False"
+        HasSystemDecorations="True"
+        SystemDecorations="Full"
+                  Background="Transparent"
+        Title="AvalonSS2">
+
+  <!--
+
+  <Design.DataContext>
+      <vm:MainWindowViewModel />
+  </Design.DataContext>
+  -->
+
+  <Window.Styles>
+      <Style Selector="Panel#MainPanel">
+        <Setter Property="Background">
+          <Setter.Value>
+            <ImageBrush Source="avares://SS2.AvaloniaUI/Assets/_licensed/PanelTemplate.png" />
+          </Setter.Value>
+        </Setter>
+      </Style>
+
+      <Style Selector="StackPanel#ItemContainer">
+        <Setter Property="Margin" Value="18 10"/>
+      </Style>
+
+    <Style Selector="TextBlock.screen">
+      <Setter Property="Foreground" Value="#00FEBF"/>
+      <Setter Property="FontSize" Value="11.5"></Setter>
+    </Style>
+
+    <Style Selector="Panel#GridPanel">
+      <Setter Property="Height" Value="125"></Setter>
+    </Style>
+    <Style Selector="Panel#ControlPanel">
+      <Setter Property="Height" Value="125"></Setter>
+    </Style>
+    </Window.Styles>
+
+  <Panel Name="MainPanel" Background="{DynamicResource Background}">
+    <StackPanel Name="ItemContainer">
+      <Panel Classes="Side">
+        <TextBlock Classes="screen" Text="{Binding Greeting}"/>
+      </Panel>
+      <Panel Name="GridPanel">
+        <uc:NodeGrid DataContext="{Binding MyNodeGrid}"></uc:NodeGrid>
+      </Panel>
+      <Panel Name="ControlPanel">
+        <uc:ControlPanel DataContext="{Binding MyControlPanel}"></uc:ControlPanel>
+      </Panel>
+    </StackPanel>
+  </Panel>
+
+
+  </Window>

@@ -1,0 +1,12 @@
+C:\Users\Jonas\source\repos\ss2\SS2.Core\bin\Debug\net5.0\SS2.Core.deps.json
+C:\Users\Jonas\source\repos\ss2\SS2.Core\bin\Debug\net5.0\SS2.Core.dll
+C:\Users\Jonas\source\repos\ss2\SS2.Core\bin\Debug\net5.0\ref\SS2.Core.dll
+C:\Users\Jonas\source\repos\ss2\SS2.Core\bin\Debug\net5.0\SS2.Core.pdb
+C:\Users\Jonas\source\repos\ss2\SS2.Core\obj\Debug\net5.0\SS2.Core.csproj.AssemblyReference.cache
+C:\Users\Jonas\source\repos\ss2\SS2.Core\obj\Debug\net5.0\SS2.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Jonas\source\repos\ss2\SS2.Core\obj\Debug\net5.0\SS2.Core.AssemblyInfoInputs.cache
+C:\Users\Jonas\source\repos\ss2\SS2.Core\obj\Debug\net5.0\SS2.Core.AssemblyInfo.cs
+C:\Users\Jonas\source\repos\ss2\SS2.Core\obj\Debug\net5.0\SS2.Core.csproj.CoreCompileInputs.cache
+C:\Users\Jonas\source\repos\ss2\SS2.Core\obj\Debug\net5.0\SS2.Core.dll
+C:\Users\Jonas\source\repos\ss2\SS2.Core\obj\Debug\net5.0\ref\SS2.Core.dll
+C:\Users\Jonas\source\repos\ss2\SS2.Core\obj\Debug\net5.0\SS2.Core.pdb

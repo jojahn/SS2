@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>SS2.AvaloniaUI</RootNamespace>
+    <AssemblyName>SS2.AvaloniaUI</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+    <None Remove="Assets\avalonia-logo-2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.10.3" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.3" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.3" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SS2.Core\SS2.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\ControlPanel.axaml.cs">
+      <DependentUpon>ControlPanel.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Node.axaml.cs">
+      <DependentUpon>Node.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+</Project>
