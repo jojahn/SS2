@@ -13,19 +13,17 @@ namespace SS2.AvaloniaUI.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private LogicController _controller;
-        public MainWindowViewModel(LogicController controller)
+        public MainWindowViewModel()
         {
-            _controller = controller;
-            MyNodeGrid = new NodeGridViewModel(controller.GetNodeList());
-            MyControlPanel = new MyControlPanelViewModel();
+            MyNodeGrid = new NodeGridViewModel(App.Controller.GetNodeList());
+            MyControlPanel = new ControlPanelViewModel();
             CloseWindowCommand = ReactiveCommand.Create(CloseWindow);
         }
 
-        public string Greeting => "Hack to open crate.\nCritical failure destorys it.";
+        public string Greeting => "Hack to open crate.\nCritical failure destroys it.";
 
         public NodeGridViewModel MyNodeGrid { get; }
-        public MyControlPanelViewModel MyControlPanel { get; }
+        public ControlPanelViewModel MyControlPanel { get; }
 
         public void BeginMoveDrag(object sender, Avalonia.Input.PointerPressedEventArgs args)
         {

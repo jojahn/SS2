@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SS2.Core.Model
+namespace SS2.Core.Logic
 {
-    public enum GameState
+    public class Console
     {
-        IDLE = 0,
-        STARTED = 1,
-        FAILED = 2,
-        WON = 3
+
     }
 }

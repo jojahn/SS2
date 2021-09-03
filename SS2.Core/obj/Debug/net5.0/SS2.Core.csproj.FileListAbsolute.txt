@@ -10,3 +10,5 @@ C:\Users\Jonas\source\repos\ss2\SS2.Core\obj\Debug\net5.0\SS2.Core.csproj.CoreCo
 C:\Users\Jonas\source\repos\ss2\SS2.Core\obj\Debug\net5.0\SS2.Core.dll
 C:\Users\Jonas\source\repos\ss2\SS2.Core\obj\Debug\net5.0\ref\SS2.Core.dll
 C:\Users\Jonas\source\repos\ss2\SS2.Core\obj\Debug\net5.0\SS2.Core.pdb
+C:\Users\Jonas\source\repos\ss2\SS2.Core\obj\Debug\net5.0\SS2.Core.Resources.Resource1.resources
+C:\Users\Jonas\source\repos\ss2\SS2.Core\obj\Debug\net5.0\SS2.Core.csproj.GenerateResource.cache

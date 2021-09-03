@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SS2.AvaloniaUI.ViewModels
+namespace SS2.Core.Resources
 {
-    public class MyControlPanelViewModel : ViewModelBase
+    class IResources
     {
+
     }
 }

@@ -23,6 +23,10 @@ namespace SS2.Core.Model
 
         public double Chance { get; }
 
+        public bool Activated { get; set; }
+
+        public bool Failed { get; set; }
+
         public Node(long x, long y, bool isICE, double chance)
         {
             Id = Guid.NewGuid();
@@ -31,6 +35,8 @@ namespace SS2.Core.Model
             Y = y.ToString();
             Chance = chance;
             IsICE = isICE;
+            Activated = false;
+            Failed = false;
         }
 
         public Node(Vector2 position, bool isICE, double chance)
@@ -41,6 +47,14 @@ namespace SS2.Core.Model
             Y = position.Y.ToString();
             Chance = chance;
             IsICE = isICE;
+            Activated = false;
+            Failed = false;
+        }
+
+        public void Reset()
+        {
+            Activated = false;
+            Failed = false;
         }
     }
 }

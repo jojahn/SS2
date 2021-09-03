@@ -10,9 +10,25 @@ namespace SS2.Core
     public class BasicLogicController : LogicController
     {
         private List<Node> _nodes;
+        private Random _random = new Random();
+
 
         public BasicLogicController() : base()
         {
+        }
+
+        public override GameState CheckState()
+        {
+            if (GameState == GameState.STARTED)
+            {
+                List<Node> remainingNodes = _nodes.Where((Node node) => !node.Activated || node.Failed).ToList();
+                if (remainingNodes.Count == 0)
+                {
+                    return GameState.FAILED;
+                }
+
+            }
+            return GameState;
         }
 
         public override void GenerateNodes()
@@ -30,9 +46,26 @@ namespace SS2.Core
             return _nodes;
         }
 
-        public override void OnNodeClicked(Node node)
+        public override void ResetNodes()
         {
-            throw new NotImplementedException();
+            foreach(Node node in _nodes)
+            {
+                node.Reset();
+            }
+        }
+
+        public override bool TryNode(Node node)
+        {
+            bool failed = false; // _random.NextDouble() > node.Chance;
+            if (!failed)
+            {
+                node.Activated = true;
+            }
+            if (failed && node.IsICE)
+            {
+                GameState = GameState.FAILED;
+            }
+            return !failed;
         }
     }
 }

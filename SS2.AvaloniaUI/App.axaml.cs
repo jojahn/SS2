@@ -9,7 +9,7 @@ namespace SS2.AvaloniaUI
 {
     public class App : Application
     {
-        private LogicController controller = new BasicLogicController();
+        public static LogicController Controller { get; } = new BasicLogicController();
 
         public override void Initialize()
         {
@@ -22,7 +22,7 @@ namespace SS2.AvaloniaUI
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(controller),
+                    DataContext = new MainWindowViewModel(),
                 };
             }
 
