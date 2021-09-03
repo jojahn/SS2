@@ -50,6 +50,7 @@ namespace SS2.AvaloniaUI.Views
                     {
                         Button actualItem = (Button) ((ContentPresenter)presenter).Child;
                         SS2.Core.Model.Node node = (SS2.Core.Model.Node)actualItem.DataContext;
+                        // actualItem.Command = MyCommand();
                         Grid.SetColumn(presenter, (int)node.Position.X);
                         Grid.SetRow(presenter, (int)node.Position.Y);
                     }

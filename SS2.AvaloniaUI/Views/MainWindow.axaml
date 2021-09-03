@@ -15,9 +15,10 @@
         MinHeight="300"
         MinWidth="200"
         CanResize="False"
-        HasSystemDecorations="True"
-        SystemDecorations="Full"
-                  Background="Transparent"
+        HasSystemDecorations="False"
+        SystemDecorations="None"
+        Background="Transparent"
+        TransparencyLevelHint="Transparent"
         Title="AvalonSS2">
 
   <!--
@@ -37,7 +38,6 @@
       </Style>
 
       <Style Selector="StackPanel#ItemContainer">
-        <Setter Property="Margin" Value="18 10"/>
       </Style>
 
     <Style Selector="TextBlock.screen">
@@ -48,16 +48,37 @@
     <Style Selector="Panel#GridPanel">
       <Setter Property="Height" Value="125"></Setter>
     </Style>
+    
     <Style Selector="Panel#ControlPanel">
       <Setter Property="Height" Value="125"></Setter>
+    </Style>
+    
+    <Style Selector="Button#CloseWindowButton">
+      <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+      <Setter Property="VerticalAlignment" Value="Top"></Setter>
+      <Setter Property="Height" Value="20"></Setter>
+      <Setter Property="Width" Value="20"></Setter>
+      <Setter Property="Cursor" Value="Hand"></Setter>
+    </Style>
+    
+    <Style Selector="Panel#MovementPanel">
+      <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+      <Setter Property="VerticalAlignment" Value="Top"></Setter>
+      <Setter Property="Height" Value="100"></Setter>
+      <Setter Property="Width" Value="20"></Setter>
+      <Setter Property="Margin" Value="0 20 0 0"></Setter>
+      <Setter Property="Cursor" Value="SizeAll"></Setter>
     </Style>
     </Window.Styles>
 
   <Panel Name="MainPanel" Background="{DynamicResource Background}">
-    <StackPanel Name="ItemContainer">
-      <Panel Classes="Side" Height="28">
+    <Panel Margin="18 8 8 10">
+      <Button Name="CloseWindowButton" Command="{Binding CloseWindowCommand}"></Button>
+      <Panel Name="MovementPanel"></Panel>
+      <StackPanel Name="ItemContainer">
+      <StackPanel Classes="Side" Height="28" Orientation="Horizontal">
         <TextBlock Classes="screen" Text="{Binding Greeting}"/>
-      </Panel>
+      </StackPanel>
       <Panel Name="GridPanel" Margin="2 0 18 0">
         <uc:NodeGrid DataContext="{Binding MyNodeGrid}"></uc:NodeGrid>
       </Panel>
@@ -65,6 +86,7 @@
         <uc:ControlPanel DataContext="{Binding MyControlPanel}"></uc:ControlPanel>
       </Panel>
     </StackPanel>
+    </Panel>
   </Panel>
 
 

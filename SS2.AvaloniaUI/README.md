@@ -1,54 +1,50 @@
-# AvalonSS2
-
-![v1](https://img.shields.io/badge/version-0.0.1-blue)
-![MIT](https://img.shields.io/badge/License-GNU%20GPLv3-red)
+# SS2.Avalonia
 
 > A cross platform implementation of the **hacking mini game** from **ss2** using **.NET 5** and **Avalonia UI**
 
 ![Icon](Assets/Icon_96x96.png)
 
-[Avalonia UI](https://avaloniaui.net/) *cross-platform .NET UI framework*  
-[SS2](https://shodan.fandom.com/wiki/Hacking) *tic-tac-toc/connect-four like mini game from the classic shooter System Shock 2*
+![Icon](Assets/Screenshots/Game.png)
 
-## Screenshots
-
-### Start
-
-![Icon](Assets/Screenshots/Start.png)
-
-
-### Ingame
-
-![Icon](Assets/Screenshots/Ingame.png)
-
-### Win
-
-![Icon](Assets/Screenshots/Win.png)
-
-### Lose
-
-![Icon](Assets/Screenshots/Lose.png)
-
-## Download
-
-* [Windows x64]()
-* [Linux x64]()
-* [macOS x64]()
+---
 
 ## Build
 
-## 
+Use the build feature of your IDE (e.g. Visual Studio, Rider)  
+Or
 
 ```bash
 dotnet build
 ```
 
+## Package
+
+```bash
+dotnet publish
+```
+
+### macOS
+
+*TODO: extra steps*
+
+## Debug
+
+### CLI
+
+```bash
+dotnet run --configuration Debug
+```
+
+### Visual Studio
+
+1. Run the Debug Profile of SS2.Avalonia with the Start Button or `F5` and the SS2.Avalonia selected as Startup Project 
+2. Press `F12` for a developer console similar to brower devtools
+
+### Rider
+
+*unsupported*
+
 ## Docs
 
 * [Avalonia Documentation](https://docs.avaloniaui.net)  
 * [Avalonia Reference](http://reference.avaloniaui.net/api)
-* [SS2 Rules](https://shodan.fandom.com/wiki/Hacking)
-
-## License
-
-[GNU GPLv3](LICENSE)

@@ -124,10 +124,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SS2.Core\SS2.Core.csproj">
-      <Project>{fcf64200-7cb6-4ac3-a3a7-0abfa033fc56}</Project>
-      <Name>SS2.Core</Name>
-    </ProjectReference>
+    <Resource Include="_licensed\HackPanel.png" />
+    <Resource Include="_licensed\template_background.png" />
+    <Resource Include="_licensed\template_hacking.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

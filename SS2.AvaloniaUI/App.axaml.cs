@@ -22,7 +22,6 @@ namespace SS2.AvaloniaUI
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    TransparencyLevelHint = Avalonia.Controls.WindowTransparencyLevel.Blur,
                     DataContext = new MainWindowViewModel(controller),
                 };
             }

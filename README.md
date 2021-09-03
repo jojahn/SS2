@@ -39,38 +39,6 @@
 * [Linux x64]()
 * [macOS x64]()
 
-## Build
-
-### SS2.Avalonia
-
-```bash
-dotnet build
-```
-
-### SS2.Core
-
-```bash
-dotnet build
-```
-
-### SS2.WPF
-
-```bash
-MSBuild ...
-```
-
-## Debug
-
-### Visual Studio
-
-Press `F12` for a developer console similar to brower devtools
-
-## Docs
-
-* [Avalonia Documentation](https://docs.avaloniaui.net)  
-* [Avalonia Reference](http://reference.avaloniaui.net/api)
-* [SS2 Rules](https://shodan.fandom.com/wiki/Hacking)
-
 ## License
 
 [GNU GPLv3](LICENSE)
