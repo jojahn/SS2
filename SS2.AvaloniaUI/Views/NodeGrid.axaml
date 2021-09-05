@@ -18,7 +18,7 @@
       <TextBlock  Grid.Row="1" Grid.Column="2" Text="4" Grid.RowSpan="2" Grid.ColumnSpan="2"></TextBlock>
     </Grid> -->
     <StackPanel.Styles>
-      <Style Selector="ItemsControl /template/ ContentPresenter">
+      <!-- <Style Selector="ItemsControl /template/ ContentPresenter">
         <Setter Property="Grid.Row" Value="1"></Setter>
         <Setter Property="Background" Value="Red"></Setter>
         <Setter Property="Width" Value="100"></Setter>
@@ -42,7 +42,7 @@
         <Setter Property="Grid.Row" Value="1"></Setter>
         <Setter Property="Background" Value="Red"></Setter>
         <Setter Property="Width" Value="100"></Setter>
-      </Style>
+      </Style>-->
     </StackPanel.Styles>
       <ItemsControl Name="MyItemsControl" Items="{Binding Items}">
       <ItemsControl.ItemsPanel>
@@ -55,7 +55,7 @@
           <DataTemplate>
             <!-- <TextBlock Classes="myTextBlockClass" Grid.Row="2" Grid.Column="3" Text="_" Grid.RowSpan="2" Grid.ColumnSpan="2">
             </TextBlock> -->
-            <Button Classes="node" Classes.activated="{Binding Activated}" Grid.Row="3" Grid.Column="{Binding X}" Content="{Binding X}" CommandParameter="{Binding}" Command="{Binding ElementName=MyItemsControl, Path=DataContext.OnNodeClickCommand}">
+            <Button Classes="node" Classes.activated="{Binding Activated}" Grid.Row="{Binding Y}" Grid.Column="{Binding X}" Content="{Binding X}" CommandParameter="{Binding}" Command="{Binding ElementName=MyItemsControl, Path=DataContext.OnNodeClickCommand}">
             <Button.Styles>
               <Style Selector="Button.node">
                 <Setter Property="Height" Value="16"></Setter>
@@ -76,7 +76,7 @@
               </Style>
 
               <Style Selector="Button.node /template/ ContentPresenter">
-              <Setter Property="CornerRadius" Value="0"/>
+                <Setter Property="CornerRadius" Value="0"/>
               </Style>
 
               <Style Selector="Button.node.failed">
@@ -94,6 +94,38 @@
                   </Setter.Value>
                 </Setter>
               </Style>
+
+              <Style Selector="Button.node:pointerover">
+                <Setter Property="Height" Value="16"></Setter>
+                <Setter Property="Width" Value="16"></Setter>
+                <Setter Property="Cursor" Value="Hand"></Setter>
+                <Setter Property="Background">
+                  <Setter.Value>
+                    <SolidColorBrush Color="#00FEBF" Opacity="0.2"/>
+                  </Setter.Value>
+                </Setter>
+                <Setter Property="BorderBrush">
+                  <Setter.Value>
+                    <SolidColorBrush Color="#00FEBF" Opacity="1"/>
+                  </Setter.Value>
+                </Setter>
+                <Setter Property="BorderThickness" Value="2"></Setter>
+                <Setter Property="Padding" Value="30 10 10 10"></Setter>
+              </Style>
+
+              <Style Selector="Button.node:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background">
+                  <Setter.Value>
+                    <SolidColorBrush Color="#00FEBF" Opacity="0.2"/>
+                  </Setter.Value>
+                </Setter>
+                <Setter Property="BorderBrush">
+                  <Setter.Value>
+                    <SolidColorBrush Color="#00FEBF" Opacity="1"/>
+                  </Setter.Value>
+                </Setter>
+              </Style>
+
             </Button.Styles>
           </Button>
         </DataTemplate>

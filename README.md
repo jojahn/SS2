@@ -3,7 +3,7 @@
 ![v1](https://img.shields.io/badge/version-0.0.1-blue)
 ![MIT](https://img.shields.io/badge/License-GNU%20GPLv3-red)
 
-> A .NET implementation of the **hacking mini game** from **ss2** using **.NET 5**/**Avalonia UI** and **WPF/WinForms**.  
+> A .NET implementation of the **hacking mini game** from **ss2** using **.NET** and **Avalonia UI** / **WPF**.  
 > The mini game from the classic System Shock 2 itself is like *tic-tac-toc/connect-four*
 
 ![Icon](Assets/Icon_96x96.png)

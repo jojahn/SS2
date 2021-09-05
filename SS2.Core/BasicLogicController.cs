@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +13,18 @@ namespace SS2.Core
     {
         private List<Node> _nodes;
         private Random _random = new Random();
+        private ObservableCollection<Node> _observableNodes;
+        private ObservableCollection<string> _observableResponses;
+        private ObservableCollection<string> _observableGameState;
 
 
         public BasicLogicController() : base()
         {
+            _observableNodes = new ObservableCollection<Node>();
+            foreach(Node n in _nodes) {
+                _observableNodes.Add(n);
+            }
+            _observableResponses = new ObservableCollection<string>(this.Responses);
         }
 
         public override GameState CheckState()
@@ -65,7 +75,33 @@ namespace SS2.Core
             {
                 GameState = GameState.FAILED;
             }
+            // _observableNodes.Remove(node);
+            // _observableNodes.Add(node);
+            _observableNodes.Where((Node n) => n.Id.Equals(node.Id)).First().Activated = true;
             return !failed;
         }
+
+        public override void SubscribeToNodeList(EventHandler eventHandler)
+        {
+            NotifyCollectionChangedEventHandler ev = (object sender, NotifyCollectionChangedEventArgs args) => {
+                eventHandler.Invoke(sender, args);
+            };
+            _observableNodes.CollectionChanged += ev;
+        }
+
+        public override void SubscribeToResponses(EventHandler eventHandler)
+        {
+            NotifyCollectionChangedEventHandler ev = (object sender, NotifyCollectionChangedEventArgs args) => {
+                eventHandler.Invoke(sender, args);
+            };
+            _observableResponses.CollectionChanged += ev;
+        }
+
+        public override void SubscribeToGameState(EventHandler eventHandler)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }

@@ -15,7 +15,7 @@ namespace SS2.AvaloniaUI.ViewModels
 
         public ControlPanelViewModel()
         {
-            Items = new ObservableCollection<string>(App.Controller.GetLines());
+            Items = new ObservableCollection<string>(App.Controller.GetResponses());
             StartResetCommand = ReactiveCommand.Create(StartReset);
         }
 

@@ -33,12 +33,22 @@ namespace SS2.AvaloniaUI.ViewModels
         {
             App.Controller.OnNodeClicked(node);
             node.Activated = true;
+            IEnumerable<Node> nodes = App.Controller.GetNodeList();
+            Node? current = Items.FirstOrDefault(n => n.Id.Equals(node.Id));
+            if (current != null) {
+                int index = Items.IndexOf(current);
+                Items.Remove(current);
+                current.Activated = true;
+                Items.Insert(index, current);
+            }
+            // Node? item = nodes.FirstOrDefault(n => n.Id.Equals(node.Id));
+            // item.Activated = updated.Activated;
             return true;
         }
 
-        public void OnChange(object sender, EventArgs e)
+        public void OnChange(object? sender, EventArgs e)
         {
-            var a = e;
+            var nodes = Items;
         }
 
     }

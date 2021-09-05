@@ -15,7 +15,7 @@ namespace SS2.Core
     {
         protected static readonly int NumberOfNodes = 14;
 
-        protected List<string> Lines { get; set; }
+        protected List<string> Responses { get; set; }
 
         protected static readonly Vector2[] NodePositions = new Vector2[14] {
             new Vector2(2, 0),
@@ -62,9 +62,9 @@ namespace SS2.Core
             GameState = GameState.STARTED;
         }
 
-        public List<string> GetLines()
+        public List<string> GetResponses()
         {
-            return Lines;
+            return Responses;
         }
 
         public abstract void GenerateNodes();
@@ -78,7 +78,7 @@ namespace SS2.Core
         public void OnNodeClicked(Node node)
         {
             bool success = TryNode(node);
-            Lines.Add(NodeResponses.GetRandomResponse(success));
+            Responses.Add(NodeResponses.GetRandomResponse(success));
         }
 
         public abstract bool TryNode(Node node);
@@ -89,7 +89,7 @@ namespace SS2.Core
             double CYBStatDeduction = (-1) * Math.Round(Difficulty.ScaleCYBStat(DeviceState, PlayerState) * 100);
             double finalDifficulty = Math.Round(Difficulty.GetFinalDifficulty(DeviceState, PlayerState) * 100);
             string nodeOrNodes = DeviceState.ICENodes == 1 ? "node" : "nodes";
-            Lines = new List<string>(new string[] {
+            Responses = new List<string>(new string[] {
                 $"Initial Difficulty: {DeviceState.InitialDifficulty * 100}%.",
                 $"Hack Skill {PlayerState.HackSkill}: {hackSkillDeduction}%.",
                 $"CYB stat {PlayerState.CYBStat}: {CYBStatDeduction}%.",
@@ -97,5 +97,10 @@ namespace SS2.Core
                 $"{DeviceState.ICENodes} ICE {nodeOrNodes}."
             });
         }
+
+        public abstract void SubscribeToNodeList(EventHandler eventHandler);
+        public abstract void SubscribeToResponses(EventHandler eventHandler);
+        public abstract void SubscribeToGameState(EventHandler eventHandler);
+
     }
 }

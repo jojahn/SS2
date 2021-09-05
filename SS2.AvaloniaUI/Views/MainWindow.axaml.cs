@@ -23,7 +23,7 @@ namespace SS2.AvaloniaUI.Views
             AvaloniaXamlLoader.Load(this);
         }
 
-        public void OnPointerPressed(object sender, PointerPressedEventArgs args)
+        public void OnPointerPressed(object? sender, PointerPressedEventArgs args)
         {
             if (App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
