@@ -22,23 +22,20 @@ namespace SS2.AvaloniaUI.ViewModels
             Items = new ObservableCollection<Node>(App.Controller.GetNodeList());
             Items.CollectionChanged += OnChange;
             OnNodeClickCommand = ReactiveCommand.Create<Node, bool>(OnNodeClick);
-            foreach(Node node in nodes)
-            {
-                // node.Activated = true;
-            }
         }
 
 
         public bool OnNodeClick(Node node)
         {
             App.Controller.OnNodeClicked(node);
-            node.Activated = true;
             IEnumerable<Node> nodes = App.Controller.GetNodeList();
             Node? current = Items.FirstOrDefault(n => n.Id.Equals(node.Id));
-            if (current != null) {
+            Node? updated = nodes.FirstOrDefault(n => n.Id.Equals(node.Id));
+            if (null != current && null != updated) {
                 int index = Items.IndexOf(current);
                 Items.Remove(current);
-                current.Activated = true;
+                current.Failed = updated.Failed;
+                current.Activated = current.Activated;
                 Items.Insert(index, current);
             }
             // Node? item = nodes.FirstOrDefault(n => n.Id.Equals(node.Id));

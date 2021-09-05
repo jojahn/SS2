@@ -66,18 +66,17 @@ namespace SS2.Core
 
         public override bool TryNode(Node node)
         {
-            bool failed = false; // _random.NextDouble() > node.Chance;
+            bool failed = _random.NextDouble() > node.Chance;
             if (!failed)
             {
                 node.Activated = true;
+            } else {
+                node.Failed = true;
             }
             if (failed && node.IsICE)
             {
                 GameState = GameState.FAILED;
             }
-            // _observableNodes.Remove(node);
-            // _observableNodes.Add(node);
-            _observableNodes.Where((Node n) => n.Id.Equals(node.Id)).First().Activated = true;
             return !failed;
         }
 

@@ -44,7 +44,6 @@ namespace SS2.AvaloniaUI.Views
 
         public void OnEvent(object? sender, EventArgs e)
         {
-            Console.WriteLine("---> NodeGrid Update Rows, Columns");
             // TODO: Figure out how to properly set Grid.Row and Grid.Column on ContentPresenter
             // (Grid > ContentPresenter (not styleable using "ItemControls /template/ ContentPresenter") > Button)
             ItemsControl itemsControl = this.FindControl<ItemsControl>("MyItemsControl");
@@ -64,14 +63,10 @@ namespace SS2.AvaloniaUI.Views
                         Button actualItem = (Button) ((ContentPresenter)presenter).Child;
                         SS2.Core.Model.Node node = (SS2.Core.Model.Node)actualItem.DataContext;
                         if (node != null) {
-                            Console.WriteLine($"--> Node.Position: {node.Position.X}, {node.Position.Y}");
-                            Console.WriteLine($"--> Button.Grid: {Grid.GetColumn(actualItem)}, {Grid.GetRow(actualItem)}");
                             int row = Grid.GetRow(actualItem);
                             int column = Grid.GetColumn(actualItem);
                             Grid.SetColumn(presenter, column); // (int)node.Position.X);
                             Grid.SetRow(presenter, row); // (int)node.Position.Y);
-                            Console.WriteLine($"--> Presenters: {Grid.GetColumn(presenter)}, {Grid.GetRow(presenter)}");
-                            Console.WriteLine("");
                         }
                     }
                 }
