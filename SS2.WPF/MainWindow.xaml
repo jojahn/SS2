@@ -12,7 +12,7 @@
         " ResizeMode="NoResize">
     <Grid Width="250" Height="400">
         <Grid.Background>
-            <ImageBrush ImageSource="_licensed/template_background.png" Stretch="UniformToFill"/>
+            <ImageBrush ImageSource="/_licensed/template_background.png" Stretch="UniformToFill"/>
         </Grid.Background>
         <Grid HorizontalAlignment="Left" Height="159" Margin="22,63,0,0" VerticalAlignment="Top" Width="183" Grid.ColumnSpan="3">
             <Button x:Name="button02" Cursor="Hand" Content="" HorizontalAlignment="Left" Margin="83,6,0,0" VerticalAlignment="Top" Width="13" Height="13" Click="nodeClick" Background="#FF4E9588" RenderTransformOrigin="2.3,0"/>

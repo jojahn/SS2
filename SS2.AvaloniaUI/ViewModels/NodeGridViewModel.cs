@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,8 @@ namespace SS2.AvaloniaUI.ViewModels
         public NodeGridViewModel(IEnumerable<Node> nodes)
         {
             Items = new ObservableCollection<Node>(App.Controller.GetNodeList());
-            Items.CollectionChanged += OnChange;
+            App.Controller.SubscribeToNodeList(OnChange);
+            // Items.CollectionChanged += OnChange;
             OnNodeClickCommand = ReactiveCommand.Create<Node, bool>(OnNodeClick);
         }
 
@@ -43,9 +45,17 @@ namespace SS2.AvaloniaUI.ViewModels
             return true;
         }
 
-        public void OnChange(object? sender, EventArgs e)
+        public void OnChange(object? sender, EventArgs args)
         {
-            var nodes = Items;
+            Items.Clear();
+            List<Node> nodes = (List<Node>)App.Controller.GetNodeList();// (IReadOnlyList<Node>)((NotifyCollectionChangedEventArgs)args).NewItems;
+            if (nodes != null)
+            {
+                foreach (Node node in nodes)
+                {
+                    Items.Add(node);
+                }
+            }
         }
 
     }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SS2.Core.Model
 {
-    public class ObservableNode : IObservable<Node>
+    public class ObservableGameState : IObservable<GameState>
     {
-        public IDisposable Subscribe(IObserver<Node> observer)
+        public IDisposable Subscribe(IObserver<GameState> observer)
         {
             throw new NotImplementedException();
         }

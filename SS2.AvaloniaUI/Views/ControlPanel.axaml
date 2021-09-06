@@ -12,12 +12,13 @@
       </Style>
     </Panel.Styles>
     <DockPanel>
-      <StackPanel DockPanel.Dock="Left">
+      <StackPanel>
+        <ScrollViewer Name="ResponsesScrollViewer" Height="110" VerticalScrollBarVisibility="Hidden">
         <ItemsControl Name="MyControlPanelItemsControl" Items="{Binding Items}">
           <!-- <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-              <Grid Name="MyGrid" Width="150" Height="120" ColumnDefinitions="32,32,32,32,32" RowDefinitions="34,34,34,34"  Margin="4">
-              </Grid>
+              <Panel>
+              </Panel>
             </ItemsPanelTemplate>
           </ItemsControl.ItemsPanel> -->
           <ItemsControl.ItemTemplate>
@@ -26,6 +27,7 @@
             </DataTemplate>
           </ItemsControl.ItemTemplate>
         </ItemsControl>
+        </ScrollViewer>
       </StackPanel>
       <StackPanel DockPanel.Dock="Right">
         <Button Classes="controlButton" Height="55" Width="20">

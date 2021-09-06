@@ -73,17 +73,32 @@ namespace SS2.Core
 
         public abstract IEnumerable<Node> GetNodeList();
 
+        public abstract Node GetNodeById(Guid id);
+
         public abstract GameState CheckState();
 
-        public void OnNodeClicked(Node node)
+        public virtual void OnNodeClicked(Node node)
         {
-            bool success = TryNode(node);
+            Node foundNode = GetNodeById(node.Id);
+            bool success = TryNode(foundNode);
+            if (success)
+            {
+                foundNode.Activated = true;
+            }
+            else
+            {
+                foundNode.Failed = true;
+            }
+            if (!success && node.IsICE)
+            {
+                GameState = GameState.FAILED;
+            }
             Responses.Add(NodeResponses.GetRandomResponse(success));
         }
 
         public abstract bool TryNode(Node node);
 
-        private void MakeInitialLines()
+        protected virtual void MakeInitialLines()
         {
             double hackSkillDeduction = (-1) * Math.Round(Difficulty.ScaleHackSkill(DeviceState, PlayerState) * 100);
             double CYBStatDeduction = (-1) * Math.Round(Difficulty.ScaleCYBStat(DeviceState, PlayerState) * 100);
@@ -100,7 +115,7 @@ namespace SS2.Core
 
         public abstract void SubscribeToNodeList(EventHandler eventHandler);
         public abstract void SubscribeToResponses(EventHandler eventHandler);
-        public abstract void SubscribeToGameState(EventHandler eventHandler);
+        public abstract void SubscribeToGameState(EventHandler<GameState> eventHandler);
 
     }
 }

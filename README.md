@@ -1,4 +1,4 @@
-# AvalonSS2
+# SS2
 
 ![v1](https://img.shields.io/badge/version-0.0.1-blue)
 ![MIT](https://img.shields.io/badge/License-GNU%20GPLv3-red)

@@ -60,8 +60,8 @@ namespace SS2.AvaloniaUI.Views
                     Controls presenters = grid.Children;
                     foreach (Control presenter in presenters)
                     {
-                        Button actualItem = (Button) ((ContentPresenter)presenter).Child;
-                        SS2.Core.Model.Node node = (SS2.Core.Model.Node)actualItem.DataContext;
+                        Button? actualItem = (Button) ((ContentPresenter)presenter).Child;
+                        SS2.Core.Model.Node node = (SS2.Core.Model.Node)actualItem?.DataContext;
                         if (node != null) {
                             int row = Grid.GetRow(actualItem);
                             int column = Grid.GetColumn(actualItem);

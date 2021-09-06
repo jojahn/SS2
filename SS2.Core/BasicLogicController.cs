@@ -15,7 +15,7 @@ namespace SS2.Core
         private Random _random = new Random();
         private ObservableCollection<Node> _observableNodes;
         private ObservableCollection<string> _observableResponses;
-        private ObservableCollection<string> _observableGameState;
+        private event EventHandler<GameState> _gameStateChanged;
 
 
         public BasicLogicController() : base()
@@ -61,23 +61,29 @@ namespace SS2.Core
             foreach(Node node in _nodes)
             {
                 node.Reset();
+                _observableNodes.Remove(_observableNodes.First(n => n.Id.Equals(node.Id)));
+                _observableNodes.Add(node);
             }
         }
 
         public override bool TryNode(Node node)
         {
-            bool failed = _random.NextDouble() > node.Chance;
-            if (!failed)
+            return _random.NextDouble() > node.Chance;
+        }
+
+        public override void OnNodeClicked(Node node)
+        {
+            base.OnNodeClicked(node);
+            Node foundNode = GetNodeById(node.Id);
+            List<string> responses = Responses
+                .Skip(_observableResponses.Count)
+                .ToList();
+            foreach (string res in responses)
             {
-                node.Activated = true;
-            } else {
-                node.Failed = true;
+                _observableResponses.Add(res);
             }
-            if (failed && node.IsICE)
-            {
-                GameState = GameState.FAILED;
-            }
-            return !failed;
+            _observableNodes.Remove(_observableNodes.First(n => n.Id.Equals(node.Id)));
+            _observableNodes.Add(foundNode);
         }
 
         public override void SubscribeToNodeList(EventHandler eventHandler)
@@ -96,11 +102,38 @@ namespace SS2.Core
             _observableResponses.CollectionChanged += ev;
         }
 
-        public override void SubscribeToGameState(EventHandler eventHandler)
+        public override void SubscribeToGameState(EventHandler<GameState> eventHandler)
         {
-            throw new NotImplementedException();
+            _gameStateChanged += eventHandler;
         }
 
+        protected override void MakeInitialLines()
+        {
+            base.MakeInitialLines();
+            if (_observableResponses != null) {
+                _observableResponses.Clear();
+                foreach(string res in Responses) {
+                    _observableResponses.Add(res);
+                }
+            } else {
+                _observableResponses = new ObservableCollection<string>(Responses);
+            }
 
+            // _observableResponses = new ObservableCollection<string>(Responses);
+        }
+
+        public override Node GetNodeById(Guid id)
+        {
+            return _nodes.First(n => n.Id.Equals(id));
+        }
+
+        private void publishGameState()
+        {
+            EventHandler<GameState> handler = _gameStateChanged;
+            if (handler != null)
+            {
+                handler(this, this.GameState);
+            }
+        }
     }
 }
