@@ -48,3 +48,12 @@ dotnet run --configuration Debug
 
 * [Avalonia Documentation](https://docs.avaloniaui.net)  
 * [Avalonia Reference](http://reference.avaloniaui.net/api)
+
+## Licenses
+
+| Component | License(-holder) |
+| --- | --- |
+| Avalonia UI | [MIT](https://github.com/AvaloniaUI/Avalonia/blob/master/licence.md) |
+| .NET 5 | [MIT](https://github.com/dotnet/core/blob/main/LICENSE.TXT) |
+| Michroma | [Open Font License](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL) (by [Vernon Adams](http://sansoxygen.com/))
+| Game Concept | Irrational Games, Looking Glass Studios |

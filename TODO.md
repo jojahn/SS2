@@ -1,11 +1,15 @@
 # TODO
 
+* Add response auto scrolling :check:
+* Fix clicks and node updates :check:
+---
+* Add Popover with success/etc.
 * Add checking win condition
-* Fix clicks and node updates
+* Switch to pure Eventhandlers on ILogicController 
+* Add edges
 * Correct Styling of Node, Buttons (:hover, :active)
 * Correct Layout/Positioning
 * Add sounds
-* Add response auto scrolling
 * Replace background with redone license free vector image
 * Replace background with completely new license free vector image
 * Add platform (in)dependent build instructions

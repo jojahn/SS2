@@ -13,42 +13,29 @@ namespace SS2.Core.Model
 
         public Vector2 Position { get; }
 
-        public int X { get; }
-        public string Y { get; }
-
-        public int YA = 10;
-
         public bool IsICE { get; }
 
 
         public double Chance { get; }
 
-        public bool Activated { get; set; }
+        public bool Activated { get; set; } = false;
 
-        public bool Failed { get; set; }
+        public bool Failed { get; set; } = false;
 
         public Node(long x, long y, bool isICE, double chance)
         {
             Id = Guid.NewGuid();
             Position = new Vector2(x, y);
-            X = (int)x;
-            Y = y.ToString();
             Chance = chance;
             IsICE = isICE;
-            Activated = false;
-            Failed = false;
         }
 
         public Node(Vector2 position, bool isICE, double chance)
         {
             Id = Guid.NewGuid();
             Position = position;
-            X = (int)position.X;
-            Y = position.Y.ToString();
             Chance = chance;
             IsICE = isICE;
-            Activated = false;
-            Failed = false;
         }
 
         public void Reset()

@@ -1,72 +1,44 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             xmlns:uc="clr-namespace:AvalonSS2.Views;assembly=SS2.AvaloniaUI"
-              xmlns:vm="using:SS2.AvaloniaUI.ViewModels"
-             x:Class="SS2.AvaloniaUI.Views.NodeGrid">
+<UserControl
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="800"
+  d:DesignHeight="450"
+  xmlns:uc="clr-namespace:AvalonSS2.Views;assembly=SS2.AvaloniaUI"
+  xmlns:vm="using:SS2.AvaloniaUI.ViewModels"
+  x:Class="SS2.AvaloniaUI.Views.NodeGrid"
+>
 
-  <!--
-  <Design.DataContext>
-    <vm:NodeGridViewModel />
-  </Design.DataContext>
-  -->
- 
-  <StackPanel>
-    <!-- <Grid ShowGridLines="True" Background="Orange" Width="120" Height="150" ColumnDefinitions="30,30,30,30" RowDefinitions="30,30,30,30,30"  Margin="4">
-      <TextBlock  Grid.Row="1" Grid.Column="2" Text="4" Grid.RowSpan="2" Grid.ColumnSpan="2"></TextBlock>
-    </Grid> -->
-    <StackPanel.Styles>
-      <!-- <Style Selector="ItemsControl /template/ ContentPresenter">
-        <Setter Property="Grid.Row" Value="1"></Setter>
-        <Setter Property="Background" Value="Red"></Setter>
-        <Setter Property="Width" Value="100"></Setter>
-      </Style>
-      <Style Selector="ItemsControl.ItemTemplate /template/ ContentPresenter">
-        <Setter Property="Grid.Row" Value="1"></Setter>
-        <Setter Property="Background" Value="Red"></Setter>
-        <Setter Property="Width" Value="100"></Setter>
-      </Style>
-      <Style Selector="DataTemplate /template/ ContentPresenter">
-        <Setter Property="Grid.Row" Value="1"></Setter>
-        <Setter Property="Background" Value="Red"></Setter>
-        <Setter Property="Width" Value="100"></Setter>
-      </Style>
-      <Style Selector="TextBlock.myTextBlockClass /template/ ContentPresenter">
-        <Setter Property="Grid.Row" Value="1"></Setter>
-        <Setter Property="Background" Value="Red"></Setter>
-        <Setter Property="Width" Value="100"></Setter>
-      </Style>
-      <Style Selector="Grid#MyGrid /template/ ContentPresenter">
-        <Setter Property="Grid.Row" Value="1"></Setter>
-        <Setter Property="Background" Value="Red"></Setter>
-        <Setter Property="Width" Value="100"></Setter>
-      </Style>-->
-    </StackPanel.Styles>
-      <ItemsControl Name="MyItemsControl" Items="{Binding Items}">
+  <Panel>
+    <ItemsControl Name="EdgesItemControl" Items="{Binding Edges}">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <Rectangle Fill="Blue" Width="10" Height="10"></Rectangle>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    <ItemsControl Name="NodesItemControl" Items="{Binding Nodes}">
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
-          <Grid Name="MyGrid" Width="150" Height="120" ColumnDefinitions="32,32,32,32,32" RowDefinitions="34,34,34,34"  Margin="4">
-          </Grid>
+          <Grid Name="MyGrid" Width="150" Height="120" ColumnDefinitions="32,32,32,32,32" RowDefinitions="34,34,34,34" Margin="4"></Grid>
         </ItemsPanelTemplate>
       </ItemsControl.ItemsPanel>
-        <ItemsControl.ItemTemplate>
-          <DataTemplate>
-            <!-- <TextBlock Classes="myTextBlockClass" Grid.Row="2" Grid.Column="3" Text="_" Grid.RowSpan="2" Grid.ColumnSpan="2">
-            </TextBlock> -->
-            <Button
-              Classes="node"
-              Classes.activated="{Binding Activated}"
-              Classes.failed="{Binding Failed}"
-              Grid.Row="{Binding Y}"
-              Grid.Column="{Binding X}"
-              CommandParameter="{Binding}"
-              Command="{Binding ElementName=MyItemsControl, Path=DataContext.OnNodeClickCommand}"
-            >
-              <Border>
-                <Rectangle/>
-              </Border>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <Button
+            Classes="node"
+            Classes.activated="{Binding Activated}"
+            Classes.failed="{Binding Failed}"
+            Grid.Row="{Binding Y}"
+            Grid.Column="{Binding X}"
+            CommandParameter="{Binding}"
+            Command="{Binding ElementName=NodesItemControl, Path=DataContext.OnNodeClickCommand}"
+          >
+            <Border>
+              <Rectangle />
+            </Border>
 
             <Button.Styles>
               <Style Selector="Button.node">
@@ -80,13 +52,13 @@
               </Style>
 
               <Style Selector="Button.node /template/ ContentPresenter">
-                <Setter Property="CornerRadius" Value="0"/>
+                <Setter Property="CornerRadius" Value="0" />
               </Style>
 
               <Style Selector="Button.node Border">
                 <Setter Property="BorderBrush">
                   <Setter.Value>
-                    <SolidColorBrush Color="#00FDC0" Opacity="0.5"/>
+                    <SolidColorBrush Color="#00FDC0" Opacity="0.5" />
                   </Setter.Value>
                 </Setter>
                 <Setter Property="BorderThickness" Value="2"></Setter>
@@ -121,7 +93,7 @@
                 <Setter Property="BorderBrush" Value="Transparent"></Setter>
               </Style>
 
-               <Style Selector="Button.node:pressed  /template/ ContentPresenter#PART_ContentPresenter">
+              <Style Selector="Button.node:pressed  /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Background" Value="Transparent"></Setter>
                 <Setter Property="BorderBrush" Value="Transparent"></Setter>
               </Style>
@@ -131,6 +103,6 @@
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
-  </StackPanel>
+  </Panel>
 
 </UserControl>

@@ -29,12 +29,12 @@
         </ItemsControl>
         </ScrollViewer>
       </StackPanel>
-      <StackPanel DockPanel.Dock="Right">
+      <StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right">
         <Button Classes="controlButton" Height="55" Width="20">
           <TextBlock Text="Tri-OS"></TextBlock>
         </Button>
-        <Button Classes="controlButton" Height="58" Width="20" Padding="0" Command="{Binding StartResetCommand}">
-          <TextBlock Text="RESET"></TextBlock>
+        <Button Classes="controlButton" Height="58" Width="20" Padding="2" Command="{Binding StartResetCommand}">
+          <TextBlock Text="RESET" TextWrapping="Wrap"></TextBlock>
         </Button>
       </StackPanel>
     </DockPanel>

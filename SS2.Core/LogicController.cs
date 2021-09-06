@@ -11,7 +11,7 @@ using SS2.Core.Resources;
 
 namespace SS2.Core
 {
-    public abstract class LogicController
+    public abstract class LogicController : ILogicController
     {
         protected static readonly int NumberOfNodes = 14;
 
@@ -37,6 +37,29 @@ namespace SS2.Core
             new Vector2(2, 3),
         };
 
+        protected static readonly int NumberOfEdges = 13;
+
+        protected static readonly Vector2[][] EdgeConnections = new Vector2[13][] {
+            new Vector2[2] { new Vector2(2, 0), new Vector2(3, 0) },
+            new Vector2[2] { new Vector2(3, 0), new Vector2(4, 0) },
+            
+            new Vector2[2] { new Vector2(2, 0), new Vector2(2, 1) },
+            new Vector2[2] { new Vector2(4, 0), new Vector2(4, 1) },
+
+            new Vector2[2] { new Vector2(0, 1), new Vector2(1, 1) },
+            new Vector2[2] { new Vector2(1, 1), new Vector2(2, 1) },
+
+            new Vector2[2] { new Vector2(0, 1), new Vector2(0, 2) },
+            new Vector2[2] { new Vector2(2, 1), new Vector2(2, 2) },
+            new Vector2[2] { new Vector2(4, 1), new Vector2(4, 2) },
+
+            new Vector2[2] { new Vector2(2, 2), new Vector2(3, 2) },
+            new Vector2[2] { new Vector2(3, 2), new Vector2(4, 2) },
+
+            new Vector2[2] { new Vector2(0, 3), new Vector2(1, 3) },
+            new Vector2[2] { new Vector2(1, 3), new Vector2(2, 3) },
+        };
+
         protected GameState GameState { get; set; }
         protected PlayerState PlayerState { get; set; }
         protected DeviceState DeviceState { get; set; }
@@ -47,14 +70,16 @@ namespace SS2.Core
             PlayerState = new PlayerState(2, 1, 1000);
             DeviceState = new DeviceState(0.75, 1, 5);
             GenerateNodes();
-            MakeInitialLines();
+            GenerateEdges();
+            GenerateInitialResponses();
         }
 
         public void Reset()
         {
             GameState = GameState.IDLE;
             ResetNodes();
-            MakeInitialLines();
+            ResetEdges();
+            GenerateInitialResponses();
         }
 
         public void Start()
@@ -67,15 +92,19 @@ namespace SS2.Core
             return Responses;
         }
 
-        public abstract void GenerateNodes();
-
-        public abstract void ResetNodes();
-
+        // Nodes
+        protected abstract void GenerateNodes();
+        protected abstract void ResetNodes();
         public abstract IEnumerable<Node> GetNodeList();
-
         public abstract Node GetNodeById(Guid id);
 
+        // GameState
         public abstract GameState CheckState();
+
+        // Edges
+        protected abstract void ResetEdges();
+        protected abstract void GenerateEdges();
+        public abstract IEnumerable<Edge> GetEdgeList();
 
         public virtual void OnNodeClicked(Node node)
         {
@@ -98,7 +127,7 @@ namespace SS2.Core
 
         public abstract bool TryNode(Node node);
 
-        protected virtual void MakeInitialLines()
+        protected virtual void GenerateInitialResponses()
         {
             double hackSkillDeduction = (-1) * Math.Round(Difficulty.ScaleHackSkill(DeviceState, PlayerState) * 100);
             double CYBStatDeduction = (-1) * Math.Round(Difficulty.ScaleCYBStat(DeviceState, PlayerState) * 100);
@@ -114,6 +143,7 @@ namespace SS2.Core
         }
 
         public abstract void SubscribeToNodeList(EventHandler eventHandler);
+        public abstract void SubscribeToEdgeList(EventHandler eventHandler);
         public abstract void SubscribeToResponses(EventHandler eventHandler);
         public abstract void SubscribeToGameState(EventHandler<GameState> eventHandler);
 

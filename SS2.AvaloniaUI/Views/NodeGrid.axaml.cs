@@ -17,16 +17,6 @@ namespace SS2.AvaloniaUI.Views
             // IEnumerable<AvalonSS2.Models.Node> nodes = new List<AvalonSS2.Models.Node>();
             // DataContext = new NodeGridViewModel(nodes);
             InitializeComponent();
-            ItemsControl ctrl = this.FindControl<ItemsControl>("MyItemsControl");
-            Grid grid = this.FindControl<Grid>("MyGrid");
-            if (ctrl != null)
-            {
-                IItemsPresenter pres = ctrl.Presenter;
-                if (pres != null)
-                {
-                    var s = pres.Styles;
-                }
-            }
             this.LayoutUpdated += this.OnEvent;
             this.DataContextChanged += this.MyDataContextChangeHandler;
         }
@@ -38,7 +28,7 @@ namespace SS2.AvaloniaUI.Views
 
         public void MyDataContextChangeHandler(object? sender, EventArgs e) {
             if (this.DataContext != null) {
-                ((NodeGridViewModel)this.DataContext).Items.CollectionChanged += OnEvent;
+                ((NodeGridViewModel)this.DataContext).Nodes.CollectionChanged += OnEvent;
             }
         }
 
@@ -46,7 +36,7 @@ namespace SS2.AvaloniaUI.Views
         {
             // TODO: Figure out how to properly set Grid.Row and Grid.Column on ContentPresenter
             // (Grid > ContentPresenter (not styleable using "ItemControls /template/ ContentPresenter") > Button)
-            ItemsControl itemsControl = this.FindControl<ItemsControl>("MyItemsControl");
+            ItemsControl itemsControl = this.FindControl<ItemsControl>("NodesItemControl");
             if (itemsControl != null)
             {
                 SetGridPositions((Grid)itemsControl.Presenter.LogicalChildren[0]);
@@ -65,8 +55,8 @@ namespace SS2.AvaloniaUI.Views
                         if (node != null) {
                             int row = Grid.GetRow(actualItem);
                             int column = Grid.GetColumn(actualItem);
-                            Grid.SetColumn(presenter, column); // (int)node.Position.X);
-                            Grid.SetRow(presenter, row); // (int)node.Position.Y);
+                            Grid.SetColumn(presenter, (int)node.Position.X); // (int)node.Position.X);
+                            Grid.SetRow(presenter, (int)node.Position.Y); // (int)node.Position.Y);
                         }
                     }
                 }

@@ -11,27 +11,22 @@ namespace SS2.Core
 {
     public class BasicLogicController : LogicController
     {
-        private List<Node> _nodes;
         private Random _random = new Random();
         private ObservableCollection<Node> _observableNodes;
+        private ObservableCollection<Edge> _observableEdges;
         private ObservableCollection<string> _observableResponses;
         private event EventHandler<GameState> _gameStateChanged;
 
 
         public BasicLogicController() : base()
         {
-            _observableNodes = new ObservableCollection<Node>();
-            foreach(Node n in _nodes) {
-                _observableNodes.Add(n);
-            }
-            _observableResponses = new ObservableCollection<string>(this.Responses);
         }
 
         public override GameState CheckState()
         {
             if (GameState == GameState.STARTED)
             {
-                List<Node> remainingNodes = _nodes.Where((Node node) => !node.Activated || node.Failed).ToList();
+                List<Node> remainingNodes = _observableNodes.Where((Node node) => !node.Activated || node.Failed).ToList();
                 if (remainingNodes.Count == 0)
                 {
                     return GameState.FAILED;
@@ -41,27 +36,29 @@ namespace SS2.Core
             return GameState;
         }
 
-        public override void GenerateNodes()
+        protected override void GenerateNodes()
         {
-            _nodes = new List<Node>();
+            List<Node> nodes = new List<Node>();
             for (int i = 0; i < NumberOfNodes; i++)
             {
                 Node node = new Node(LogicController.NodePositions[i], false, 0.5);
-                _nodes.Add(node);
+                nodes.Add(node);
             }
+            _observableNodes = new ObservableCollection<Node>(nodes);
         }
 
         public override List<Node> GetNodeList()
         {
-            return _nodes;
+            return _observableNodes.ToList();
         }
 
-        public override void ResetNodes()
+        protected override void ResetNodes()
         {
-            foreach(Node node in _nodes)
+            List<Node> nodes = _observableNodes.ToList();
+            foreach(Node node in nodes)
             {
                 node.Reset();
-                _observableNodes.Remove(_observableNodes.First(n => n.Id.Equals(node.Id)));
+                _observableNodes.Remove(node);
                 _observableNodes.Add(node);
             }
         }
@@ -107,9 +104,9 @@ namespace SS2.Core
             _gameStateChanged += eventHandler;
         }
 
-        protected override void MakeInitialLines()
+        protected override void GenerateInitialResponses()
         {
-            base.MakeInitialLines();
+            base.GenerateInitialResponses();
             if (_observableResponses != null) {
                 _observableResponses.Clear();
                 foreach(string res in Responses) {
@@ -124,7 +121,7 @@ namespace SS2.Core
 
         public override Node GetNodeById(Guid id)
         {
-            return _nodes.First(n => n.Id.Equals(id));
+            return _observableNodes.First(n => n.Id.Equals(id));
         }
 
         private void publishGameState()
@@ -134,6 +131,41 @@ namespace SS2.Core
             {
                 handler(this, this.GameState);
             }
+        }
+
+        public override IEnumerable<Edge> GetEdgeList()
+        {
+            return _observableEdges.ToList();
+        }
+
+        protected override void ResetEdges()
+        {
+            List<Edge> edges = _observableEdges.ToList();
+            foreach(Edge edge in edges)
+            {
+                edge.Reset();
+                _observableEdges.Remove(edge);
+                _observableEdges.Add(edge);
+            }
+        }
+
+        protected override void GenerateEdges()
+        {
+            List<Edge> edges = new List<Edge>();
+            for (int i = 0; i < NumberOfEdges; i++)
+            {
+                Edge edge = new Edge(LogicController.EdgeConnections[i][0], LogicController.EdgeConnections[i][1]);
+                edges.Add(edge);
+            }
+            _observableEdges = new ObservableCollection<Edge>(edges);
+        }
+
+        public override void SubscribeToEdgeList(EventHandler eventHandler)
+        {
+            NotifyCollectionChangedEventHandler ev = (object sender, NotifyCollectionChangedEventArgs args) => {
+                eventHandler.Invoke(sender, args);
+            };
+            _observableEdges.CollectionChanged += ev;
         }
     }
 }

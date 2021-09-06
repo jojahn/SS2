@@ -11,7 +11,7 @@
 ## Project Structure
 
 [SS2.Core](SS2.Core) *Essential game logic and models*  
-[SS2.Avalonia](SS2.SS2.AvaloniaUI) *Cross-platform implementation using [Avalonia UI](https://avaloniaui.net/)*   
+[SS2.Avalonia](SS2.AvaloniaUI) *Cross-platform implementation using [Avalonia UI](https://avaloniaui.net/)*   
 [SS2.WPF](SS2.WPF) *Experimental WPF/WinForms implementation*  
 
 ## Screenshots

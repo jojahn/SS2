@@ -15,45 +15,61 @@ namespace SS2.AvaloniaUI.ViewModels
 {
     public class NodeGridViewModel : ViewModelBase
     {
-        public ObservableCollection<Node> Items { get; set; }
+        public ObservableCollection<Node> Nodes { get; set; }
+        public ObservableCollection<Edge> Edges { get; set; }
         public ICommand OnNodeClickCommand { get; }
 
         public NodeGridViewModel(IEnumerable<Node> nodes)
         {
-            Items = new ObservableCollection<Node>(App.Controller.GetNodeList());
+            Nodes = new ObservableCollection<Node>(App.Controller.GetNodeList());
+            Edges = new ObservableCollection<Edge>(App.Controller.GetEdgeList());
             App.Controller.SubscribeToNodeList(OnChange);
-            // Items.CollectionChanged += OnChange;
-            OnNodeClickCommand = ReactiveCommand.Create<Node, bool>(OnNodeClick);
+            App.Controller.SubscribeToEdgeList(OnEdgesChange);
+            OnNodeClickCommand = ReactiveCommand.Create<Node>(OnNodeClick);
         }
 
 
-        public bool OnNodeClick(Node node)
+        public void OnNodeClick(Node node)
         {
+            if (node.Activated || node.Failed) {
+                return;
+            }
             App.Controller.OnNodeClicked(node);
             IEnumerable<Node> nodes = App.Controller.GetNodeList();
-            Node? current = Items.FirstOrDefault(n => n.Id.Equals(node.Id));
+            Node? current = Nodes.FirstOrDefault(n => n.Id.Equals(node.Id));
             Node? updated = nodes.FirstOrDefault(n => n.Id.Equals(node.Id));
             if (null != current && null != updated) {
-                int index = Items.IndexOf(current);
-                Items.Remove(current);
+                int index = Nodes.IndexOf(current);
+                Nodes.Remove(current);
                 current.Failed = updated.Failed;
                 current.Activated = current.Activated;
-                Items.Insert(index, current);
+                Nodes.Insert(index, current);
             }
-            // Node? item = nodes.FirstOrDefault(n => n.Id.Equals(node.Id));
-            // item.Activated = updated.Activated;
-            return true;
+            return;
         }
 
         public void OnChange(object? sender, EventArgs args)
         {
-            Items.Clear();
+            Nodes.Clear();
             List<Node> nodes = (List<Node>)App.Controller.GetNodeList();// (IReadOnlyList<Node>)((NotifyCollectionChangedEventArgs)args).NewItems;
             if (nodes != null)
             {
                 foreach (Node node in nodes)
                 {
-                    Items.Add(node);
+                    Nodes.Add(node);
+                }
+            }
+        }
+
+        public void OnEdgesChange(object? sender, EventArgs args)
+        {
+            Edges.Clear();
+            List<Edge> edges = (List<Edge>)App.Controller.GetEdgeList();// (IReadOnlyList<Node>)((NotifyCollectionChangedEventArgs)args).NewItems;
+            if (edges != null)
+            {
+                foreach (Edge edge in edges)
+                {
+                    Edges.Add(edge);
                 }
             }
         }
