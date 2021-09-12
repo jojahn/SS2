@@ -26,12 +26,14 @@ namespace SS2.AvaloniaUI.ViewModels
         public void StartReset()
         {
             Items.Clear();
-            App.Controller.Reset();
+            if (App.Controller.GameState == Core.Model.GameState.IDLE)
+            {
+                App.Controller.Start();
+            } else
+            {
+                App.Controller.Reset();
+            }
             List<string> responses = App.Controller.GetResponses();
-            // foreach (string res in responses)
-            // {
-            //     Items.Add(res);
-            // }
         }
 
         public void OnResponesChanged(object? sender, EventArgs args)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using SS2.Core.Model;
@@ -20,6 +21,7 @@ namespace SS2.Core
 
         public BasicLogicController() : base()
         {
+            publishGameState();
         }
 
         public override GameState CheckState()
@@ -65,7 +67,7 @@ namespace SS2.Core
 
         public override bool TryNode(Node node)
         {
-            return _random.NextDouble() > node.Chance;
+            return true; // _random.NextDouble() > node.Chance;
         }
 
         public override void OnNodeClicked(Node node)
@@ -81,6 +83,16 @@ namespace SS2.Core
             }
             _observableNodes.Remove(_observableNodes.First(n => n.Id.Equals(node.Id)));
             _observableNodes.Add(foundNode);
+            _updateEdges(node);
+            List<Node> unclickedNodes = _observableNodes
+                .Where(n => !n.Activated && !n.Failed)
+                .ToList();
+            if (unclickedNodes.Count == 0)
+            {
+                GameState = GameState.FAILED;
+                publishGameState();
+            }
+            publishGameState();
         }
 
         public override void SubscribeToNodeList(EventHandler eventHandler)
@@ -166,6 +178,76 @@ namespace SS2.Core
                 eventHandler.Invoke(sender, args);
             };
             _observableEdges.CollectionChanged += ev;
+        }
+
+        private void _updateEdges(Node node)
+        {
+            List<Node> neighbors = _observableNodes
+                .Where(n => !n.Id.Equals(node.Id))
+                .Where(n => n.Position.X == node.Position.X || n.Position.Y == node.Position.Y)
+                .ToList();
+            foreach(Node neighbor in neighbors)
+            {
+                Edge edge = null;
+                if (node.Activated && neighbor.Activated)
+                {
+                    edge = _getConnectingEdge(node, neighbor);
+                    if (null != edge)
+                    {
+                        edge.Activated = true;
+                    }
+                }
+
+                // TODO: Check Neighbor <-> Node <-> Neighbor
+                List<Node> secondNeighbors = _observableNodes
+                    .Where(n => !n.Id.Equals(node.Id) && !n.Id.Equals(neighbor.Id))
+                    .Where(n => (n.Position.X == neighbor.Position.X && node.Position.X == n.Position.X)
+                        || (n.Position.Y == neighbor.Position.Y && n.Position.Y == node.Position.Y))
+                    .ToList();
+                foreach(Node secondNeighbor in secondNeighbors)
+                {
+                    Edge secondEdge = _getConnectingEdge(secondNeighbor, neighbor);
+                    if (node.Activated && neighbor.Activated && secondNeighbor.Activated && null != secondEdge)
+                    {
+                        secondEdge.Bridged = true;
+                        _observableEdges.Remove(secondEdge);
+                        _observableEdges.Add(secondEdge);
+
+                        if (null != edge)
+                        {
+                            edge.Bridged = true;
+                            _observableEdges.Remove(edge);
+                            _observableEdges.Add(edge);
+                        }
+                        GameState = GameState.WON;
+                        publishGameState();
+                    }
+                }
+
+                if (null != edge)
+                {
+                    _observableEdges.Remove(edge);
+                    _observableEdges.Add(edge);
+                }
+            }
+        }
+
+        private Edge _getConnectingEdge(Node a, Node b)
+        {
+            for (int i = 0; i < NumberOfEdges; i++)
+            {
+                Vector2 from = EdgeConnections[i][0];
+                Vector2 to = EdgeConnections[i][1];
+                if (
+                    from.Equals(a.Position) && to.Equals(b.Position)
+                    || (to.Equals(a.Position) && from.Equals(b.Position))
+                )
+                {
+                    return _observableEdges
+                        .First(e => e.From.Equals(from) && e.To.Equals(to));
+                }
+            }
+            return null;
         }
     }
 }

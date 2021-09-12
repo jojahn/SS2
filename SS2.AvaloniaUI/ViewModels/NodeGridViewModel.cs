@@ -25,7 +25,9 @@ namespace SS2.AvaloniaUI.ViewModels
             Edges = new ObservableCollection<Edge>(App.Controller.GetEdgeList());
             App.Controller.SubscribeToNodeList(OnChange);
             App.Controller.SubscribeToEdgeList(OnEdgesChange);
+            App.Controller.SubscribeToGameState(OnGameStateChange);
             OnNodeClickCommand = ReactiveCommand.Create<Node>(OnNodeClick);
+            SetGameStateDisplay(GameState.IDLE);
         }
 
 
@@ -35,7 +37,7 @@ namespace SS2.AvaloniaUI.ViewModels
                 return;
             }
             App.Controller.OnNodeClicked(node);
-            IEnumerable<Node> nodes = App.Controller.GetNodeList();
+            /*IEnumerable<Node> nodes = App.Controller.GetNodeList();
             Node? current = Nodes.FirstOrDefault(n => n.Id.Equals(node.Id));
             Node? updated = nodes.FirstOrDefault(n => n.Id.Equals(node.Id));
             if (null != current && null != updated) {
@@ -44,7 +46,7 @@ namespace SS2.AvaloniaUI.ViewModels
                 current.Failed = updated.Failed;
                 current.Activated = current.Activated;
                 Nodes.Insert(index, current);
-            }
+            }*/
             return;
         }
 
@@ -73,6 +75,39 @@ namespace SS2.AvaloniaUI.ViewModels
                 }
             }
         }
+
+        public void OnGameStateChange(object? sender, GameState args)
+        {
+            SetGameStateDisplay(args);
+        }
+
+        private void SetGameStateDisplay(GameState gameState)
+        {
+            if (gameState != GameState.STARTED)
+            {
+                GameStateEnabled = true;
+            }
+            else
+            {
+                GameStateEnabled = false;
+            }
+
+            if (gameState == GameState.FAILED)
+            {
+                GameStateText = "CRITICAL\nFAILURE";
+            }
+            else if (gameState == GameState.WON)
+            {
+                GameStateText = "SUCCESS";
+            }
+            else if (gameState == GameState.IDLE)
+            {
+                GameStateText = "CLICK START\nTO PROCEED";
+            }
+        }
+
+        public bool GameStateEnabled { get; private set; } = false;
+        public string GameStateText { get; private set; } = "";
 
     }
 }

@@ -15,6 +15,8 @@ namespace SS2.Core
     {
         protected static readonly int NumberOfNodes = 14;
 
+        protected Difficulty Difficulty;
+
         protected List<string> Responses { get; set; }
 
         protected static readonly Vector2[] NodePositions = new Vector2[14] {
@@ -37,30 +39,32 @@ namespace SS2.Core
             new Vector2(2, 3),
         };
 
-        protected static readonly int NumberOfEdges = 13;
+        protected static readonly int NumberOfEdges = 15;
 
-        protected static readonly Vector2[][] EdgeConnections = new Vector2[13][] {
+        protected static readonly Vector2[][] EdgeConnections = new Vector2[15][] {
+            // Horizontal
             new Vector2[2] { new Vector2(2, 0), new Vector2(3, 0) },
             new Vector2[2] { new Vector2(3, 0), new Vector2(4, 0) },
-            
-            new Vector2[2] { new Vector2(2, 0), new Vector2(2, 1) },
-            new Vector2[2] { new Vector2(4, 0), new Vector2(4, 1) },
-
             new Vector2[2] { new Vector2(0, 1), new Vector2(1, 1) },
             new Vector2[2] { new Vector2(1, 1), new Vector2(2, 1) },
+            new Vector2[2] { new Vector2(2, 2), new Vector2(3, 2) },
+            new Vector2[2] { new Vector2(3, 2), new Vector2(4, 2) },
+            new Vector2[2] { new Vector2(0, 3), new Vector2(1, 3) },
+            new Vector2[2] { new Vector2(1, 3), new Vector2(2, 3) },
+
+            // Vertical
+            new Vector2[2] { new Vector2(2, 0), new Vector2(2, 1) },
+            new Vector2[2] { new Vector2(4, 0), new Vector2(4, 1) },
 
             new Vector2[2] { new Vector2(0, 1), new Vector2(0, 2) },
             new Vector2[2] { new Vector2(2, 1), new Vector2(2, 2) },
             new Vector2[2] { new Vector2(4, 1), new Vector2(4, 2) },
 
-            new Vector2[2] { new Vector2(2, 2), new Vector2(3, 2) },
-            new Vector2[2] { new Vector2(3, 2), new Vector2(4, 2) },
-
-            new Vector2[2] { new Vector2(0, 3), new Vector2(1, 3) },
-            new Vector2[2] { new Vector2(1, 3), new Vector2(2, 3) },
+            new Vector2[2] { new Vector2(0, 2), new Vector2(0, 3) },
+            new Vector2[2] { new Vector2(2, 2), new Vector2(2, 3) },
         };
 
-        protected GameState GameState { get; set; }
+        public GameState GameState { get; protected set; }
         protected PlayerState PlayerState { get; set; }
         protected DeviceState DeviceState { get; set; }
 
@@ -69,6 +73,7 @@ namespace SS2.Core
             GameState = GameState.IDLE;
             PlayerState = new PlayerState(2, 1, 1000);
             DeviceState = new DeviceState(0.75, 1, 5);
+            Difficulty = new Difficulty(0.75, DeviceState, PlayerState);
             GenerateNodes();
             GenerateEdges();
             GenerateInitialResponses();
@@ -76,7 +81,7 @@ namespace SS2.Core
 
         public void Reset()
         {
-            GameState = GameState.IDLE;
+            GameState = GameState.STARTED;
             ResetNodes();
             ResetEdges();
             GenerateInitialResponses();
@@ -85,6 +90,12 @@ namespace SS2.Core
         public void Start()
         {
             GameState = GameState.STARTED;
+            PlayerState = new PlayerState(2, 1, 1000);
+            DeviceState = new DeviceState(0.75, 1, 5);
+            Difficulty = new Difficulty(0.75, DeviceState, PlayerState);
+            GenerateNodes();
+            GenerateEdges();
+            GenerateInitialResponses();
         }
 
         public List<string> GetResponses()
@@ -131,7 +142,7 @@ namespace SS2.Core
         {
             double hackSkillDeduction = (-1) * Math.Round(Difficulty.ScaleHackSkill(DeviceState, PlayerState) * 100);
             double CYBStatDeduction = (-1) * Math.Round(Difficulty.ScaleCYBStat(DeviceState, PlayerState) * 100);
-            double finalDifficulty = Math.Round(Difficulty.GetFinalDifficulty(DeviceState, PlayerState) * 100);
+            double finalDifficulty = Math.Round(Difficulty.Final);
             string nodeOrNodes = DeviceState.ICENodes == 1 ? "node" : "nodes";
             Responses = new List<string>(new string[] {
                 $"Initial Difficulty: {DeviceState.InitialDifficulty * 100}%.",

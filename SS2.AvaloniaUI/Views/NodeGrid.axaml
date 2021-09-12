@@ -13,9 +13,49 @@
 
   <Panel>
     <ItemsControl Name="EdgesItemControl" Items="{Binding Edges}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <Grid
+            Name="EdgeGrid"
+            Width="150"
+            Height="120"
+            ColumnDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,auto"
+            RowDefinitions="auto,auto,auto,auto,auto,auto,auto"
+            Margin="4"></Grid>
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
       <ItemsControl.ItemTemplate>
         <DataTemplate>
-          <Rectangle Fill="Blue" Width="10" Height="10"></Rectangle>
+          <Rectangle
+            Classes="edge"
+            Classes.vertical="{Binding !IsHorizontal}"
+            Classes.horizontal="{Binding IsHorizontal}"
+            Classes.activated="{Binding Activated}"
+            Classes.bridged="{Binding Bridged}"
+          >
+            <Rectangle.Styles>
+              <Style Selector="Rectangle.edge">
+                <Setter Property="Fill" Value="#02FCB7"></Setter>
+                <Setter Property="Opacity" Value="0.2"></Setter>
+              </Style>
+              <Style Selector="Rectangle.activated">
+                <Setter Property="Opacity" Value="1"></Setter>
+                <Setter Property="Fill" Value="#02FCB7"></Setter>
+              </Style>
+              <Style Selector="Rectangle.bridged">
+                <Setter Property="Opacity" Value="1"></Setter>
+                <Setter Property="Fill" Value="#EB890F"></Setter>
+              </Style>
+              <Style Selector="Rectangle.edge.horizontal">
+                <Setter Property="Height" Value="10"></Setter>
+                <Setter Property="Width" Value="30"></Setter>
+              </Style>
+              <Style Selector="Rectangle.edge.vertical">
+                <Setter Property="Height" Value="30"></Setter>
+                <Setter Property="Width" Value="10"></Setter>
+              </Style>
+            </Rectangle.Styles>
+          </Rectangle>
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
@@ -103,6 +143,26 @@
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
+    <DockPanel IsVisible="{Binding GameStateEnabled}">
+      <Border Name="GameStatePopup" Width="120" Height="40" BorderBrush="#00FDC0" BorderThickness="2">
+        <DockPanel>
+          <TextBlock DockPanel.Dock="Bottom" Classes="popup" Text="{Binding GameStateText}"></TextBlock>
+        </DockPanel>
+        <Border.Styles>
+          <Style Selector="Border#GameStatePopup">
+            <Setter Property="BorderBrush" Value="#00FDC0"></Setter>
+            <Setter Property="Background" Value="#004032"></Setter>
+          </Style>
+          <Style Selector="TextBlock.popup">
+            <Setter Property="Foreground" Value="#00FDC0"></Setter>
+            <Setter Property="FontWeight" Value="700"></Setter>
+            <Setter Property="FontSize" Value="18"></Setter>
+            <Setter Property="TextAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+          </Style>
+        </Border.Styles>
+      </Border>
+    </DockPanel>
   </Panel>
 
 </UserControl>

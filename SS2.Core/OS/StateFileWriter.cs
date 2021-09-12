@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SS2.Core.Logic
+namespace SS2.Core.OS
 {
-    public class Console
+    class StateFileWriter
     {
-
     }
 }

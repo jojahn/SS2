@@ -3,6 +3,7 @@
 * Add response auto scrolling :check:
 * Fix clicks and node updates :check:
 ---
+* Split controller functionality into parts in logic/
 * Add Popover with success/etc.
 * Add checking win condition
 * Switch to pure Eventhandlers on ILogicController 

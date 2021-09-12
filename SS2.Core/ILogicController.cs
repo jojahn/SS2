@@ -10,5 +10,7 @@ namespace SS2.Core
 
         public IEnumerable<Node> GetNodeList();
         public IEnumerable<Edge> GetEdgeList();
+
+        public GameState GameState { get; }
     }
 }
