@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SS2.Core.OS
+namespace SS2.Core.Model
 {
-    class StateFileWriter
+    public class SavedConfiguration
     {
+        
     }
 }

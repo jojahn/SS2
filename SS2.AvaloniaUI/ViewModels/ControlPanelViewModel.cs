@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls.ApplicationLifetimes;
 using ReactiveUI;
 using SS2.Core;
+using SS2.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,11 +14,21 @@ namespace SS2.AvaloniaUI.ViewModels
 {
     public class ControlPanelViewModel : ViewModelBase
     {
+        public ICommand StartResetCommand { get; }
+
+
+        private string _actionButtonString = "START";
+        public string ActionButtonString
+        {
+            get => _actionButtonString;
+            set => this.RaiseAndSetIfChanged(ref _actionButtonString, value);
+        }
 
         public ControlPanelViewModel()
         {
             Items = new ObservableCollection<string>(App.Controller.GetResponses());
             StartResetCommand = ReactiveCommand.Create(StartReset);
+            App.Controller.SubscribeToGameState(OnGameStateChanged);
             App.Controller.SubscribeToResponses(OnResponesChanged);
         }
 
@@ -53,7 +64,15 @@ namespace SS2.AvaloniaUI.ViewModels
             } */
         }
 
-
-        public ICommand StartResetCommand { get; }
+        public void OnGameStateChanged(object? sender, GameState gameState)
+        {
+            if (gameState.Equals(GameState.STARTED))
+            {
+                ActionButtonString = "RESET";
+            } else
+            {
+                ActionButtonString = "START";
+            }
+        }
     }
 }

@@ -19,6 +19,19 @@ namespace SS2.AvaloniaUI.ViewModels
         public ObservableCollection<Edge> Edges { get; set; }
         public ICommand OnNodeClickCommand { get; }
 
+        private bool _gameStateEnabled = false;
+        public bool GameStateEnabled
+        {
+            get => _gameStateEnabled;
+            set => this.RaiseAndSetIfChanged(ref _gameStateEnabled, value);
+        }
+        private string _gameStateText = "";
+        public string GameStateText
+        {
+            get => _gameStateText;
+            set => this.RaiseAndSetIfChanged(ref _gameStateText, value);
+        }
+
         public NodeGridViewModel(IEnumerable<Node> nodes)
         {
             Nodes = new ObservableCollection<Node>(App.Controller.GetNodeList());
@@ -105,9 +118,5 @@ namespace SS2.AvaloniaUI.ViewModels
                 GameStateText = "CLICK START\nTO PROCEED";
             }
         }
-
-        public bool GameStateEnabled { get; private set; } = false;
-        public string GameStateText { get; private set; } = "";
-
     }
 }

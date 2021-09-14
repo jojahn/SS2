@@ -143,10 +143,10 @@
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
-    <DockPanel IsVisible="{Binding GameStateEnabled}">
+    <DockPanel IsVisible="{Binding GameStateEnabled, Mode=OneWay}">
       <Border Name="GameStatePopup" Width="120" Height="40" BorderBrush="#00FDC0" BorderThickness="2">
         <DockPanel>
-          <TextBlock DockPanel.Dock="Bottom" Classes="popup" Text="{Binding GameStateText}"></TextBlock>
+          <TextBlock DockPanel.Dock="Bottom" Classes="popup" Text="{Binding GameStateText, Mode=OneWay}"></TextBlock>
         </DockPanel>
         <Border.Styles>
           <Style Selector="Border#GameStatePopup">

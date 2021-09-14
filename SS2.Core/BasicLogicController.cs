@@ -24,6 +24,18 @@ namespace SS2.Core
             publishGameState();
         }
 
+        public override void Start()
+        {
+            base.Start();
+            publishGameState();
+        }
+
+        public override void Reset()
+        {
+            base.Reset();
+            publishGameState();
+        }
+
         public override GameState CheckState()
         {
             if (GameState == GameState.STARTED)
@@ -67,7 +79,7 @@ namespace SS2.Core
 
         public override bool TryNode(Node node)
         {
-            return true; // _random.NextDouble() > node.Chance;
+            return _random.NextDouble() > node.Chance;
         }
 
         public override void OnNodeClicked(Node node)
@@ -87,7 +99,7 @@ namespace SS2.Core
             List<Node> unclickedNodes = _observableNodes
                 .Where(n => !n.Activated && !n.Failed)
                 .ToList();
-            if (unclickedNodes.Count == 0)
+            if (unclickedNodes.Count == 0 && GameState != GameState.WON)
             {
                 GameState = GameState.FAILED;
                 publishGameState();
@@ -198,7 +210,6 @@ namespace SS2.Core
                     }
                 }
 
-                // TODO: Check Neighbor <-> Node <-> Neighbor
                 List<Node> secondNeighbors = _observableNodes
                     .Where(n => !n.Id.Equals(node.Id) && !n.Id.Equals(neighbor.Id))
                     .Where(n => (n.Position.X == neighbor.Position.X && node.Position.X == n.Position.X)
@@ -207,6 +218,10 @@ namespace SS2.Core
                 foreach(Node secondNeighbor in secondNeighbors)
                 {
                     Edge secondEdge = _getConnectingEdge(secondNeighbor, neighbor);
+                    if (null == secondEdge)
+                    {
+                        secondEdge = _getConnectingEdge(secondNeighbor, node);
+                    }
                     if (node.Activated && neighbor.Activated && secondNeighbor.Activated && null != secondEdge)
                     {
                         secondEdge.Bridged = true;

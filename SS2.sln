@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SS2.Core", "SS2.Core\SS2.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SS2.AvaloniaUI", "SS2.AvaloniaUI\SS2.AvaloniaUI.csproj", "{9F4CFAD6-3E07-4483-9B94-6566414641A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SS2.Core.Test", "SS2.Core.Test\SS2.Core.Test.csproj", "{5A3D0A70-2AB6-4CB3-8F62-7451507E8CAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,14 @@ Global
 		{9F4CFAD6-3E07-4483-9B94-6566414641A4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9F4CFAD6-3E07-4483-9B94-6566414641A4}.Release|x64.ActiveCfg = Release|x64
 		{9F4CFAD6-3E07-4483-9B94-6566414641A4}.Release|x64.Build.0 = Release|x64
+		{5A3D0A70-2AB6-4CB3-8F62-7451507E8CAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A3D0A70-2AB6-4CB3-8F62-7451507E8CAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A3D0A70-2AB6-4CB3-8F62-7451507E8CAB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5A3D0A70-2AB6-4CB3-8F62-7451507E8CAB}.Debug|x64.Build.0 = Debug|Any CPU
+		{5A3D0A70-2AB6-4CB3-8F62-7451507E8CAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A3D0A70-2AB6-4CB3-8F62-7451507E8CAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A3D0A70-2AB6-4CB3-8F62-7451507E8CAB}.Release|x64.ActiveCfg = Release|Any CPU
+		{5A3D0A70-2AB6-4CB3-8F62-7451507E8CAB}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

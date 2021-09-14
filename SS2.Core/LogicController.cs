@@ -79,7 +79,7 @@ namespace SS2.Core
             GenerateInitialResponses();
         }
 
-        public void Reset()
+        public virtual void Reset()
         {
             GameState = GameState.STARTED;
             ResetNodes();
@@ -87,15 +87,13 @@ namespace SS2.Core
             GenerateInitialResponses();
         }
 
-        public void Start()
+        public virtual void Start()
         {
             GameState = GameState.STARTED;
             PlayerState = new PlayerState(2, 1, 1000);
             DeviceState = new DeviceState(0.75, 1, 5);
             Difficulty = new Difficulty(0.75, DeviceState, PlayerState);
-            GenerateNodes();
-            GenerateEdges();
-            GenerateInitialResponses();
+            Reset();
         }
 
         public List<string> GetResponses()
@@ -119,6 +117,10 @@ namespace SS2.Core
 
         public virtual void OnNodeClicked(Node node)
         {
+            if (!GameState.Equals(GameState.STARTED))
+            {
+                return;
+            }
             Node foundNode = GetNodeById(node.Id);
             bool success = TryNode(foundNode);
             if (success)

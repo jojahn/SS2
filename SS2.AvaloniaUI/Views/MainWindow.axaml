@@ -32,7 +32,7 @@
       <Style Selector="Panel#MainPanel">
         <Setter Property="Background">
           <Setter.Value>
-            <ImageBrush Source="avares://SS2.AvaloniaUI/Assets/_licensed/PanelTemplate.png" />
+            <ImageBrush Source="avares://SS2.AvaloniaUI/Assets/PanelBackground.png" />
           </Setter.Value>
         </Setter>
       </Style>

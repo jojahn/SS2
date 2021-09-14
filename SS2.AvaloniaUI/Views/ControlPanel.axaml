@@ -10,6 +10,40 @@
       <Style Selector="Button.controlButton">
         <Setter Property="Cursor" Value="Hand"></Setter>
       </Style>
+
+      <Style Selector="Button#StartResetButton">
+        <Setter Property="Padding" Value="2"></Setter>
+        <Setter Property="Background" Value="#004032"></Setter>
+        <Setter Property="BorderBrush" Value="#000D05"></Setter>
+        <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+      </Style>
+
+      <Style Selector="Button#StartResetButton > TextBlock">
+        <Setter Property="FontSize" Value="12"></Setter>
+        <Setter Property="LineHeight" Value="10"></Setter>
+        <Setter Property="TextWrapping" Value="Wrap"></Setter>
+        <Setter Property="Foreground" Value="#02FCB7"></Setter>
+      </Style>
+
+      <Style Selector="Button.nondefault:pointerover">
+        <Setter Property="Background" Value="#004032"></Setter>
+        <Setter Property="BorderBrush" Value="#000D05"></Setter>
+      </Style>
+
+      <Style Selector="Button.nondefault:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="#004032"></Setter>
+        <Setter Property="BorderBrush" Value="#000D05"></Setter>
+      </Style>
+
+      <Style Selector="Button.nondefault /template/ ContentPresenter">
+        <Setter Property="CornerRadius" Value="0" />
+      </Style>
+
+      <Style Selector="Button.nondefault:pressed  /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="#004032"></Setter>
+        <Setter Property="BorderBrush" Value="#000D05"></Setter>
+      </Style>
     </Panel.Styles>
     <DockPanel>
       <StackPanel>
@@ -33,9 +67,15 @@
         <Button Classes="controlButton" Height="55" Width="20">
           <TextBlock Text="Tri-OS"></TextBlock>
         </Button>
-        <Button Classes="controlButton" Height="58" Width="20" Padding="2" Command="{Binding StartResetCommand}">
-          <TextBlock Text="RESET" TextWrapping="Wrap"></TextBlock>
-        </Button>
+        <Border Height="58" Width="20" BorderThickness="0,2.5,0,0" BorderBrush="#499D83">
+          <Border BorderThickness="0,0,0,2.5" BorderBrush="#0B5C45">
+          <Border BorderThickness="2.5,0,2.5,0" BorderBrush="#16856B">
+            <Button Name="StartResetButton" Classes="nondefault controlButton" Command="{Binding StartResetCommand}">
+              <TextBlock Text="{Binding ActionButtonString}"></TextBlock>
+            </Button>
+          </Border>
+          </Border>
+        </Border>
       </StackPanel>
     </DockPanel>
   </Panel>
