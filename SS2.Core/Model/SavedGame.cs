@@ -11,12 +11,7 @@ namespace SS2.Core.Model
         public List<Edge> Edges { get; set; }
         public List<Node> Nodes { get; set; }
         public GameState GameState { get; set; }
-
-        public SavedGame(List<Edge> edges, List<Node> nodes, GameState gameState)
-        {
-            Edges = edges;
-            Nodes = nodes;
-            GameState = gameState;
-        }
+        public PlayerState PlayerState { get; set; }
+        public DeviceState DeviceState { get; set; }
     }
 }

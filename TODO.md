@@ -10,7 +10,6 @@
 * Add edges :check:
 ---
 * Add Positioning at bottom left
-* Add 
 * Add Controller State (de-)serialization (Nodes, Edges)
 * Add deviceState (de-)serialization (Player stats, nanites, etc.)
 * Fix Bug where Winning Condition requires only 3 activated nodes in same row or column
@@ -32,3 +31,4 @@
 * Add icon to single file published binary
 * Add Screenshots to README
 * Add Tests
+* Add animations (Node response flow)

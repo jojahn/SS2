@@ -107,7 +107,7 @@ namespace SS2.AvaloniaUI.ViewModels
 
             if (gameState == GameState.FAILED)
             {
-                GameStateText = "CRITICAL\nFAILURE";
+                GameStateText = "CRITICAL FAILURE";
             }
             else if (gameState == GameState.WON)
             {
@@ -115,7 +115,7 @@ namespace SS2.AvaloniaUI.ViewModels
             }
             else if (gameState == GameState.IDLE)
             {
-                GameStateText = "CLICK START\nTO PROCEED";
+                GameStateText = "CLICK START TO PROCEED";
             }
         }
     }

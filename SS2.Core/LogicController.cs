@@ -4,20 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SS2.Core.Model;
-using SS2.Core.Model.State;
 using System.Numerics;
 using SS2.Core.Logic;
 using SS2.Core.Resources;
+using SS2.Core.OS;
+using System.Collections.ObjectModel;
 
 namespace SS2.Core
 {
     public abstract class LogicController : ILogicController
     {
-        protected static readonly int NumberOfNodes = 14;
+        public event EventHandler<GameState> GameStateChanged;
 
+        protected StatePersistance persistance;
+        protected NodeResponses nodeResponses;
         protected Difficulty Difficulty;
 
-        protected List<string> Responses { get; set; }
+        protected static readonly int NumberOfNodes = 14;
 
         protected static readonly Vector2[] NodePositions = new Vector2[14] {
             new Vector2(2, 0),
@@ -68,15 +71,31 @@ namespace SS2.Core
         protected PlayerState PlayerState { get; set; }
         protected DeviceState DeviceState { get; set; }
 
+        public ObservableCollection<Node> Nodes { get; protected set; }
+        public ObservableCollection<Edge> Edges { get; protected set; }
+        public ObservableCollection<string> Responses { get; protected set; }
+
         public LogicController()
         {
             GameState = GameState.IDLE;
             PlayerState = new PlayerState(2, 1, 1000);
             DeviceState = new DeviceState(0.75, 1, 5);
             Difficulty = new Difficulty(0.75, DeviceState, PlayerState);
+
             GenerateNodes();
             GenerateEdges();
-            GenerateInitialResponses();
+
+            nodeResponses = new NodeResponses();
+            Responses = new ObservableCollection<string>(nodeResponses.GetInitialResponses(Difficulty, DeviceState, PlayerState));
+
+            persistance = new StatePersistance();
+            persistance.SaveGame(new SavedGame() {
+                PlayerState = PlayerState,
+                GameState = GameState,
+                DeviceState = DeviceState,
+                Edges = (List<Edge>)GetEdgeList(),
+                Nodes = (List<Node>)GetNodeList()
+            });
         }
 
         public virtual void Reset()
@@ -84,7 +103,11 @@ namespace SS2.Core
             GameState = GameState.STARTED;
             ResetNodes();
             ResetEdges();
-            GenerateInitialResponses();
+            Responses.Clear();
+            foreach(string res in nodeResponses.GetInitialResponses(Difficulty, DeviceState, PlayerState))
+            {
+                Responses.Add(res);
+            }
         }
 
         public virtual void Start()
@@ -94,11 +117,6 @@ namespace SS2.Core
             DeviceState = new DeviceState(0.75, 1, 5);
             Difficulty = new Difficulty(0.75, DeviceState, PlayerState);
             Reset();
-        }
-
-        public List<string> GetResponses()
-        {
-            return Responses;
         }
 
         // Nodes
@@ -114,6 +132,18 @@ namespace SS2.Core
         protected abstract void ResetEdges();
         protected abstract void GenerateEdges();
         public abstract IEnumerable<Edge> GetEdgeList();
+
+        public void OnExit()
+        {
+            persistance.SaveGame(new SavedGame()
+            {
+                PlayerState = PlayerState,
+                GameState = GameState,
+                DeviceState = DeviceState,
+                Edges = (List<Edge>)GetEdgeList(),
+                Nodes = (List<Node>)GetNodeList()
+            });
+        }
 
         public virtual void OnNodeClicked(Node node)
         {
@@ -135,25 +165,10 @@ namespace SS2.Core
             {
                 GameState = GameState.FAILED;
             }
-            Responses.Add(NodeResponses.GetRandomResponse(success));
+            Responses.Add(nodeResponses.GetRandomResponse(success));
         }
 
         public abstract bool TryNode(Node node);
-
-        protected virtual void GenerateInitialResponses()
-        {
-            double hackSkillDeduction = (-1) * Math.Round(Difficulty.ScaleHackSkill(DeviceState, PlayerState) * 100);
-            double CYBStatDeduction = (-1) * Math.Round(Difficulty.ScaleCYBStat(DeviceState, PlayerState) * 100);
-            double finalDifficulty = Math.Round(Difficulty.Final);
-            string nodeOrNodes = DeviceState.ICENodes == 1 ? "node" : "nodes";
-            Responses = new List<string>(new string[] {
-                $"Initial Difficulty: {DeviceState.InitialDifficulty * 100}%.",
-                $"Hack Skill {PlayerState.HackSkill}: {hackSkillDeduction}%.",
-                $"CYB stat {PlayerState.CYBStat}: {CYBStatDeduction}%.",
-                $"Final Difficulty: {finalDifficulty}%",
-                $"{DeviceState.ICENodes} ICE {nodeOrNodes}."
-            });
-        }
 
         public abstract void SubscribeToNodeList(EventHandler eventHandler);
         public abstract void SubscribeToEdgeList(EventHandler eventHandler);

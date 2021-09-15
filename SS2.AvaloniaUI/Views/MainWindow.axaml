@@ -59,6 +59,27 @@
       <Setter Property="Height" Value="20"></Setter>
       <Setter Property="Width" Value="20"></Setter>
       <Setter Property="Cursor" Value="Hand"></Setter>
+      <Setter Property="Background" Value="Transparent"></Setter>
+      <Setter Property="Margin" Value="0, 0, -7, 0"></Setter>
+    </Style>
+
+    <Style Selector="Button#CloseWindowButton /template/ ContentPresenter">
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <Style Selector="Button#CloseWindowButton:pointerover">
+      <Setter Property="Background" Value="Transparent"></Setter>
+      <Setter Property="BorderBrush" Value="Transparent"></Setter>
+    </Style>
+
+    <Style Selector="Button#CloseWindowButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="Transparent"></Setter>
+      <Setter Property="BorderBrush" Value="Transparent"></Setter>
+    </Style>
+
+    <Style Selector="Button#CloseWindowButton:pressed  /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="Transparent"></Setter>
+      <Setter Property="BorderBrush" Value="Transparent"></Setter>
     </Style>
     
     <Style Selector="Panel#MovementPanel">
@@ -72,7 +93,7 @@
     </Window.Styles>
 
   <Panel Name="MainPanel" Background="{DynamicResource Background}">
-    <Panel Margin="14 8 8 10">
+    <Panel Margin="16 8 14 10">
       <Button Name="CloseWindowButton" Command="{Binding CloseWindowCommand}"></Button>
       <Panel Name="MovementPanel"></Panel>
       <StackPanel Name="ItemContainer">

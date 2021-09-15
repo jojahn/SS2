@@ -9,7 +9,7 @@ namespace SS2.Core.Model
 {
     public class Edge
     {
-        public Guid Id { get; }
+        public Guid Id { get; set; }
         public bool Activated { get; set; } = false;
         public bool Bridged { get; set; } = false;
 
@@ -17,6 +17,8 @@ namespace SS2.Core.Model
         public Vector2 To { get; }
 
         public bool IsHorizontal { get; }
+
+        public Edge() { }
 
         public Edge(Vector2 from, Vector2 to) {
             Id = Guid.NewGuid();

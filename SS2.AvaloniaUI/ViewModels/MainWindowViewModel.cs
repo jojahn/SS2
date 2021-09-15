@@ -38,17 +38,11 @@ namespace SS2.AvaloniaUI.ViewModels
         {
             if (App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
+                App.Controller.OnExit();
                 desktop.MainWindow.Close();
             }
         }
 
         public ICommand CloseWindowCommand { get; }
-
-        void Onb2Click(object sender, Avalonia.Input.PointerPressedEventArgs e)
-        {
-            //logic to handle the Click event     
-            //                 desktop.MainWindow.Presenter.AddHandler(Avalonia.Controls.Panel.PointerPressedEvent, Onb2Click);
-
-        }
     }
 }

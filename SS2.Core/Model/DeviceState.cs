@@ -12,6 +12,8 @@ namespace SS2.Core.Model
         public int ICENodes { get; set; }
         public int Cost { get; set; }
 
+        public DeviceState() { }
+
         public DeviceState(double initialDifficulty, int ICENodes, int cost)
         {
             InitialDifficulty = initialDifficulty;

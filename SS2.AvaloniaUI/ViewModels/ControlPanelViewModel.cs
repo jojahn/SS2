@@ -26,10 +26,10 @@ namespace SS2.AvaloniaUI.ViewModels
 
         public ControlPanelViewModel()
         {
-            Items = new ObservableCollection<string>(App.Controller.GetResponses());
+            Items = App.Controller.Responses;
             StartResetCommand = ReactiveCommand.Create(StartReset);
             App.Controller.SubscribeToGameState(OnGameStateChanged);
-            App.Controller.SubscribeToResponses(OnResponesChanged);
+            // App.Controller.Responses;
         }
 
         public ObservableCollection<string> Items { get; }
@@ -44,12 +44,11 @@ namespace SS2.AvaloniaUI.ViewModels
             {
                 App.Controller.Reset();
             }
-            List<string> responses = App.Controller.GetResponses();
         }
 
         public void OnResponesChanged(object? sender, EventArgs args)
         {
-            List<string> responses = App.Controller.GetResponses()
+            List<string> responses = App.Controller.Responses
                 .Skip(Items.Count)
                 .ToList();
             foreach(string res in responses)

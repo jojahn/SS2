@@ -12,8 +12,7 @@ namespace SS2.Core.OS
     public class StatePersistance
     {
         private static readonly string _folderName = "avalon_ss2_E6C3D074-D0BB-48A7-AC02-A54E7F2AFCDA";
-        private static readonly string _configurationFileName = "avalon_ss2_configuration.xml";
-        private static readonly string _gameFileName = "avalon_ss2_current_game.xml";
+        private static readonly string _gameFileName = "avalon_ss2_E6C3D074-D0BB-48A7-AC02-A54E7F2AFCDA_current_game.xml";
 
         class Files
         {
@@ -57,16 +56,6 @@ namespace SS2.Core.OS
         }
 
         private Files _files = new Files(_folderName);
-
-        public void SaveConfiguration(SavedConfiguration config)
-        {
-            _files.Save<SavedConfiguration>(_configurationFileName, config);
-        }
-
-        public SavedConfiguration LoadConfiguration()
-        {
-            return _files.Load<SavedConfiguration>(_configurationFileName);
-        }
 
         public void SaveGame(SavedGame game)
         {

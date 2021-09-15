@@ -9,18 +9,19 @@ namespace SS2.Core.Model
 {
     public class Node
     {
-        public Guid Id { get; }
+        public Guid Id { get; set; }
 
-        public Vector2 Position { get; }
+        public Vector2 Position { get; set; }
 
-        public bool IsICE { get; }
+        public bool IsICE { get; set; }
 
-
-        public double Chance { get; }
+        public double Chance { get; set; }
 
         public bool Activated { get; set; } = false;
 
         public bool Failed { get; set; } = false;
+
+        public Node() { }
 
         public Node(long x, long y, bool isICE, double chance)
         {

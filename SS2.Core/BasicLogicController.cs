@@ -13,9 +13,6 @@ namespace SS2.Core
     public class BasicLogicController : LogicController
     {
         private Random _random = new Random();
-        private ObservableCollection<Node> _observableNodes;
-        private ObservableCollection<Edge> _observableEdges;
-        private ObservableCollection<string> _observableResponses;
         private event EventHandler<GameState> _gameStateChanged;
 
 
@@ -40,7 +37,7 @@ namespace SS2.Core
         {
             if (GameState == GameState.STARTED)
             {
-                List<Node> remainingNodes = _observableNodes.Where((Node node) => !node.Activated || node.Failed).ToList();
+                List<Node> remainingNodes = Nodes.Where((Node node) => !node.Activated || node.Failed).ToList();
                 if (remainingNodes.Count == 0)
                 {
                     return GameState.FAILED;
@@ -58,22 +55,22 @@ namespace SS2.Core
                 Node node = new Node(LogicController.NodePositions[i], false, 0.5);
                 nodes.Add(node);
             }
-            _observableNodes = new ObservableCollection<Node>(nodes);
+            Nodes = new ObservableCollection<Node>(nodes);
         }
 
         public override List<Node> GetNodeList()
         {
-            return _observableNodes.ToList();
+            return Nodes.ToList();
         }
 
         protected override void ResetNodes()
         {
-            List<Node> nodes = _observableNodes.ToList();
+            List<Node> nodes = Nodes.ToList();
             foreach(Node node in nodes)
             {
                 node.Reset();
-                _observableNodes.Remove(node);
-                _observableNodes.Add(node);
+                Nodes.Remove(node);
+                Nodes.Add(node);
             }
         }
 
@@ -87,16 +84,16 @@ namespace SS2.Core
             base.OnNodeClicked(node);
             Node foundNode = GetNodeById(node.Id);
             List<string> responses = Responses
-                .Skip(_observableResponses.Count)
+                .Skip(Responses.Count)
                 .ToList();
             foreach (string res in responses)
             {
-                _observableResponses.Add(res);
+                Responses.Add(res);
             }
-            _observableNodes.Remove(_observableNodes.First(n => n.Id.Equals(node.Id)));
-            _observableNodes.Add(foundNode);
+            Nodes.Remove(Nodes.First(n => n.Id.Equals(node.Id)));
+            Nodes.Add(foundNode);
             _updateEdges(node);
-            List<Node> unclickedNodes = _observableNodes
+            List<Node> unclickedNodes = Nodes
                 .Where(n => !n.Activated && !n.Failed)
                 .ToList();
             if (unclickedNodes.Count == 0 && GameState != GameState.WON)
@@ -112,7 +109,7 @@ namespace SS2.Core
             NotifyCollectionChangedEventHandler ev = (object sender, NotifyCollectionChangedEventArgs args) => {
                 eventHandler.Invoke(sender, args);
             };
-            _observableNodes.CollectionChanged += ev;
+            Nodes.CollectionChanged += ev;
         }
 
         public override void SubscribeToResponses(EventHandler eventHandler)
@@ -120,7 +117,7 @@ namespace SS2.Core
             NotifyCollectionChangedEventHandler ev = (object sender, NotifyCollectionChangedEventArgs args) => {
                 eventHandler.Invoke(sender, args);
             };
-            _observableResponses.CollectionChanged += ev;
+            Responses.CollectionChanged += ev;
         }
 
         public override void SubscribeToGameState(EventHandler<GameState> eventHandler)
@@ -128,24 +125,9 @@ namespace SS2.Core
             _gameStateChanged += eventHandler;
         }
 
-        protected override void GenerateInitialResponses()
-        {
-            base.GenerateInitialResponses();
-            if (_observableResponses != null) {
-                _observableResponses.Clear();
-                foreach(string res in Responses) {
-                    _observableResponses.Add(res);
-                }
-            } else {
-                _observableResponses = new ObservableCollection<string>(Responses);
-            }
-
-            // _observableResponses = new ObservableCollection<string>(Responses);
-        }
-
         public override Node GetNodeById(Guid id)
         {
-            return _observableNodes.First(n => n.Id.Equals(id));
+            return Nodes.First(n => n.Id.Equals(id));
         }
 
         private void publishGameState()
@@ -159,17 +141,17 @@ namespace SS2.Core
 
         public override IEnumerable<Edge> GetEdgeList()
         {
-            return _observableEdges.ToList();
+            return (List<Edge>)Edges.ToList();
         }
 
         protected override void ResetEdges()
         {
-            List<Edge> edges = _observableEdges.ToList();
+            List<Edge> edges = Edges.ToList();
             foreach(Edge edge in edges)
             {
                 edge.Reset();
-                _observableEdges.Remove(edge);
-                _observableEdges.Add(edge);
+                Edges.Remove(edge);
+                Edges.Add(edge);
             }
         }
 
@@ -181,7 +163,7 @@ namespace SS2.Core
                 Edge edge = new Edge(LogicController.EdgeConnections[i][0], LogicController.EdgeConnections[i][1]);
                 edges.Add(edge);
             }
-            _observableEdges = new ObservableCollection<Edge>(edges);
+            Edges = new ObservableCollection<Edge>(edges);
         }
 
         public override void SubscribeToEdgeList(EventHandler eventHandler)
@@ -189,12 +171,12 @@ namespace SS2.Core
             NotifyCollectionChangedEventHandler ev = (object sender, NotifyCollectionChangedEventArgs args) => {
                 eventHandler.Invoke(sender, args);
             };
-            _observableEdges.CollectionChanged += ev;
+            Edges.CollectionChanged += ev;
         }
 
         private void _updateEdges(Node node)
         {
-            List<Node> neighbors = _observableNodes
+            List<Node> neighbors = Nodes
                 .Where(n => !n.Id.Equals(node.Id))
                 .Where(n => n.Position.X == node.Position.X || n.Position.Y == node.Position.Y)
                 .ToList();
@@ -203,36 +185,37 @@ namespace SS2.Core
                 Edge edge = null;
                 if (node.Activated && neighbor.Activated)
                 {
-                    edge = _getConnectingEdge(node, neighbor);
+                    edge = GetConnectingEdge(node, neighbor);
                     if (null != edge)
                     {
                         edge.Activated = true;
                     }
                 }
 
-                List<Node> secondNeighbors = _observableNodes
+                List<Node> secondNeighbors = Nodes
                     .Where(n => !n.Id.Equals(node.Id) && !n.Id.Equals(neighbor.Id))
                     .Where(n => (n.Position.X == neighbor.Position.X && node.Position.X == n.Position.X)
                         || (n.Position.Y == neighbor.Position.Y && n.Position.Y == node.Position.Y))
                     .ToList();
                 foreach(Node secondNeighbor in secondNeighbors)
                 {
-                    Edge secondEdge = _getConnectingEdge(secondNeighbor, neighbor);
+                    Edge secondEdge = GetConnectingEdge(secondNeighbor, neighbor);
                     if (null == secondEdge)
                     {
-                        secondEdge = _getConnectingEdge(secondNeighbor, node);
+                        secondEdge = GetConnectingEdge(secondNeighbor, node);
                     }
-                    if (node.Activated && neighbor.Activated && secondNeighbor.Activated && null != secondEdge)
+                    bool connectionTested = TestNodeConnections(node, neighbor, secondNeighbor);
+                    if (node.Activated && neighbor.Activated && secondNeighbor.Activated && null != secondEdge && connectionTested)
                     {
                         secondEdge.Bridged = true;
-                        _observableEdges.Remove(secondEdge);
-                        _observableEdges.Add(secondEdge);
+                        Edges.Remove(secondEdge);
+                        Edges.Add(secondEdge);
 
                         if (null != edge)
                         {
                             edge.Bridged = true;
-                            _observableEdges.Remove(edge);
-                            _observableEdges.Add(edge);
+                            Edges.Remove(edge);
+                            Edges.Add(edge);
                         }
                         GameState = GameState.WON;
                         publishGameState();
@@ -241,13 +224,13 @@ namespace SS2.Core
 
                 if (null != edge)
                 {
-                    _observableEdges.Remove(edge);
-                    _observableEdges.Add(edge);
+                    Edges.Remove(edge);
+                    Edges.Add(edge);
                 }
             }
         }
 
-        private Edge _getConnectingEdge(Node a, Node b)
+        private Edge GetConnectingEdge(Node a, Node b)
         {
             for (int i = 0; i < NumberOfEdges; i++)
             {
@@ -258,11 +241,28 @@ namespace SS2.Core
                     || (to.Equals(a.Position) && from.Equals(b.Position))
                 )
                 {
-                    return _observableEdges
+                    return Edges
                         .First(e => e.From.Equals(from) && e.To.Equals(to));
                 }
             }
             return null;
+        }
+
+        private bool TestNodeConnections(params Node[] nodes)
+        {
+            foreach(Node i in nodes)
+            {
+                foreach (Node j in nodes)
+                {
+                    Edge edge = GetConnectingEdge(i, j);
+                    if (null != edge)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

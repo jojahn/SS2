@@ -12,6 +12,8 @@ namespace SS2.Core.Model
         public int CYBStat { get; set; }
         public int Nanites { get; set; }
 
+        public PlayerState() { }
+
         public PlayerState(int hackSkill, int CYBStat, int nanites)
         {
             HackSkill = hackSkill;

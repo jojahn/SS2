@@ -20,8 +20,8 @@
       </Style>
 
       <Style Selector="Button#StartResetButton > TextBlock">
-        <Setter Property="FontSize" Value="12"></Setter>
-        <Setter Property="LineHeight" Value="10"></Setter>
+        <Setter Property="FontSize" Value="11"></Setter>
+        <Setter Property="LineHeight" Value="9"></Setter>
         <Setter Property="TextWrapping" Value="Wrap"></Setter>
         <Setter Property="Foreground" Value="#02FCB7"></Setter>
       </Style>
@@ -44,17 +44,21 @@
         <Setter Property="Background" Value="#004032"></Setter>
         <Setter Property="BorderBrush" Value="#000D05"></Setter>
       </Style>
+
+      <Style Selector="ScrollViewer#ResponsesScrollViewer">
+        <Setter Property="Margin" Value="2,3,2,2"></Setter>
+      </Style>
     </Panel.Styles>
     <DockPanel>
       <StackPanel>
         <ScrollViewer Name="ResponsesScrollViewer" Height="110" VerticalScrollBarVisibility="Hidden">
         <ItemsControl Name="MyControlPanelItemsControl" Items="{Binding Items}">
-          <!-- <ItemsControl.ItemsPanel>
+          <!--< ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-              <Panel>
-              </Panel>
+              <StackPanel>
+              </StackPanel>
             </ItemsPanelTemplate>
-          </ItemsControl.ItemsPanel> -->
+          </ItemsControl.ItemsPanel>  -->
           <ItemsControl.ItemTemplate>
             <DataTemplate>
               <TextBlock Classes="screen" Text="{Binding}"></TextBlock>
@@ -64,9 +68,9 @@
         </ScrollViewer>
       </StackPanel>
       <StackPanel DockPanel.Dock="Right" HorizontalAlignment="Right">
-        <Button Classes="controlButton" Height="55" Width="20">
-          <TextBlock Text="Tri-OS"></TextBlock>
-        </Button>
+        <Panel Classes="" Height="55" Width="20">
+          <TextBlock Text=""></TextBlock>
+        </Panel>
         <Border Height="58" Width="20" BorderThickness="0,2.5,0,0" BorderBrush="#499D83">
           <Border BorderThickness="0,0,0,2.5" BorderBrush="#0B5C45">
           <Border BorderThickness="2.5,0,2.5,0" BorderBrush="#16856B">

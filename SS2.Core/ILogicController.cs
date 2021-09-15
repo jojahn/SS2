@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using SS2.Core.Model;
@@ -12,5 +13,11 @@ namespace SS2.Core
         public IEnumerable<Edge> GetEdgeList();
 
         public GameState GameState { get; }
+
+        public event EventHandler<GameState> GameStateChanged;
+
+        public ObservableCollection<string> Responses { get; }
+        public ObservableCollection<Node> Nodes { get; }
+        public ObservableCollection<Edge> Edges { get; }
     }
 }

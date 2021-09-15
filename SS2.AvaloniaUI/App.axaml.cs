@@ -20,10 +20,15 @@ namespace SS2.AvaloniaUI
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow
-                {
+                desktop.MainWindow = new MainWindow {
                     DataContext = new MainWindowViewModel(),
+                    WindowStartupLocation = Avalonia.Controls.WindowStartupLocation.Manual,
                 };
+                PixelPoint bottomLeft = desktop.MainWindow.Screens.Primary.WorkingArea.BottomLeft;
+                desktop.MainWindow.Position = new PixelPoint(
+                    bottomLeft.X + 10,
+                    bottomLeft.Y - (int)desktop.MainWindow.Height - 10
+                );
             }
 
             base.OnFrameworkInitializationCompleted();
