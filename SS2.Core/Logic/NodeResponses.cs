@@ -1,9 +1,11 @@
 ﻿using SS2.Core.Model;
+using SS2.Core.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace SS2.Core.Logic
 {
@@ -16,27 +18,17 @@ namespace SS2.Core.Logic
             _random = new Random();
         }
 
-        // Success
-        public static string NodeInflitrated = "Node inflitrated.";
-        public static string PasswordSpoofSuccessful = "Password spoof successful.";
-        public static string DataTransferInitiated = "Data transfer initiated.";
-
-        // Failed
-        public static string IllegalCoreAccess = "Illegal core access!";
-        public static string BufferOverflow = "Buffer overflow.";
-        public static string AccessViolationDetected = "Access violation detected!";
-
         public List<string> GetInitialResponses(Difficulty difficulty, DeviceState deviceState, PlayerState playerState)
         {
             double hackSkillDeduction = (-1) * Math.Round(Difficulty.ScaleHackSkill(deviceState, playerState) * 100);
             double CYBStatDeduction = (-1) * Math.Round(Difficulty.ScaleCYBStat(deviceState, playerState) * 100);
             double finalDifficulty = Math.Round(difficulty.Final);
-            string nodeOrNodes = deviceState.ICENodes == 1 ? "node" : "nodes";
+            string nodeOrNodes = deviceState.ICENodes == 1 ? Resources.Resources.node : Resources.Resources.nodes;
             return new List<string>(new string[] {
-                $"Initial Difficulty: {deviceState.InitialDifficulty * 100}%.",
-                $"Hack Skill {playerState.HackSkill}: {hackSkillDeduction}%.",
-                $"CYB stat {playerState.CYBStat}: {CYBStatDeduction}%.",
-                $"Final Difficulty: {finalDifficulty}%",
+                $"{Resources.Resources.InitialDifficulty}: {deviceState.InitialDifficulty * 100}%.",
+                $"{Resources.Resources.HackSkill} {playerState.HackSkill}: {hackSkillDeduction}%.",
+                $"{Resources.Resources.CYBStat} {playerState.CYBStat}: {CYBStatDeduction}%.",
+                $"{Resources.Resources.FinalDifficulty}: {finalDifficulty}%",
                 $"{deviceState.ICENodes} ICE {nodeOrNodes}."
             });
         }
@@ -58,11 +50,11 @@ namespace SS2.Core.Logic
             switch(next)
             {
                 case 1:
-                    return DataTransferInitiated;
+                    return Resources.Resources.DataTransferInitiated;
                 case 2:
-                    return PasswordSpoofSuccessful;
+                    return Resources.Resources.PasswordSpoofSuccessful;
                 default:
-                    return NodeInflitrated;
+                    return Resources.Resources.NodeInflitrated;
             }
         }
 
@@ -72,11 +64,11 @@ namespace SS2.Core.Logic
             switch (next)
             {
                 case 1:
-                    return BufferOverflow;
+                    return Resources.Resources.BufferOverflow;
                 case 2:
-                    return PasswordSpoofSuccessful;
+                    return Resources.Resources.PasswordSpoofSuccessful;
                 default:
-                    return AccessViolationDetected;
+                    return Resources.Resources.AccessViolationDetected;
             }
         }
     }

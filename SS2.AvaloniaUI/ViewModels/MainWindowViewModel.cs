@@ -8,6 +8,7 @@ using System.Text;
 using SS2.Core;
 using System.Windows.Input;
 using ReactiveUI;
+using SS2.Core.Resources;
 
 namespace SS2.AvaloniaUI.ViewModels
 {
@@ -20,7 +21,7 @@ namespace SS2.AvaloniaUI.ViewModels
             CloseWindowCommand = ReactiveCommand.Create(CloseWindow);
         }
 
-        public string Greeting => "Hack to open crate.\nCritical failure destroys it.";
+        public string Greeting => Resources.DeviceInfo;
 
         public NodeGridViewModel MyNodeGrid { get; }
         public ControlPanelViewModel MyControlPanel { get; }

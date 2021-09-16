@@ -10,6 +10,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using ReactiveUI;
 using SS2.Core.Model;
+using SS2.Core.Resources;
 
 namespace SS2.AvaloniaUI.ViewModels
 {
@@ -107,15 +108,15 @@ namespace SS2.AvaloniaUI.ViewModels
 
             if (gameState == GameState.FAILED)
             {
-                GameStateText = "CRITICAL FAILURE";
+                GameStateText = Resources.CriticalFailure;
             }
             else if (gameState == GameState.WON)
             {
-                GameStateText = "SUCCESS";
+                GameStateText = Resources.Success;
             }
             else if (gameState == GameState.IDLE)
             {
-                GameStateText = "CLICK START TO PROCEED";
+                GameStateText = Resources.ClickStart;
             }
         }
     }

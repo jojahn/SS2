@@ -2,6 +2,7 @@
 using ReactiveUI;
 using SS2.Core;
 using SS2.Core.Model;
+using SS2.Core.Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,7 +18,7 @@ namespace SS2.AvaloniaUI.ViewModels
         public ICommand StartResetCommand { get; }
 
 
-        private string _actionButtonString = "START";
+        private string _actionButtonString = Resources.Start;
         public string ActionButtonString
         {
             get => _actionButtonString;
@@ -67,10 +68,10 @@ namespace SS2.AvaloniaUI.ViewModels
         {
             if (gameState.Equals(GameState.STARTED))
             {
-                ActionButtonString = "RESET";
+                ActionButtonString = Resources.Reset;
             } else
             {
-                ActionButtonString = "START";
+                ActionButtonString = Resources.Start;
             }
         }
     }

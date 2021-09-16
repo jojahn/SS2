@@ -8,8 +8,8 @@
 * Add checking win condition :check:
 * Replace background with redone license free vector image :check:
 * Add edges :check:
+* Add Positioning at bottom left :check:
 ---
-* Add Positioning at bottom left
 * Add Controller State (de-)serialization (Nodes, Edges)
 * Add deviceState (de-)serialization (Player stats, nanites, etc.)
 * Fix Bug where Winning Condition requires only 3 activated nodes in same row or column

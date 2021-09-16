@@ -9,6 +9,9 @@ namespace SS2.Core.Logic
 {
     public class Difficulty
     {
+        public static readonly double CYBERSTAT_SCALE = 0.05;
+        public static readonly double HACKSKILL_SCALE = 0.1;
+
         public double Initial { get; }
         public double Final { get; }
 
