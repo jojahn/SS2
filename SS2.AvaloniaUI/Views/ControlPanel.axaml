@@ -46,7 +46,7 @@
       </Style>
 
       <Style Selector="ScrollViewer#ResponsesScrollViewer">
-        <Setter Property="Margin" Value="2,3,2,2"></Setter>
+        <Setter Property="Margin" Value="6,3,2,2"></Setter>
       </Style>
     </Panel.Styles>
     <DockPanel>
@@ -61,7 +61,7 @@
           </ItemsControl.ItemsPanel>  -->
           <ItemsControl.ItemTemplate>
             <DataTemplate>
-              <TextBlock Classes="screen" Text="{Binding}"></TextBlock>
+              <TextBlock TextWrapping="Wrap" Classes="screen" Text="{Binding}"></TextBlock>
             </DataTemplate>
           </ItemsControl.ItemTemplate>
         </ItemsControl>

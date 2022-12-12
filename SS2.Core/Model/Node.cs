@@ -44,5 +44,10 @@ namespace SS2.Core.Model
             Activated = false;
             Failed = false;
         }
+
+        public override string ToString()
+        {
+            return $"Node(Id={Id}, Position=({Position.X + "," + Position.Y}), ICE={IsICE}, A={Activated}, F={Failed}, C={Chance})";
+        }
     }
 }

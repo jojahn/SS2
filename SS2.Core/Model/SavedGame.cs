@@ -13,5 +13,6 @@ namespace SS2.Core.Model
         public GameState GameState { get; set; }
         public PlayerState PlayerState { get; set; }
         public DeviceState DeviceState { get; set; }
+        public List<string> Responses { get; set; }
     }
 }

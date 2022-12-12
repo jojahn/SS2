@@ -9,6 +9,7 @@ using SS2.Core.Logic;
 using SS2.Core.Resources;
 using SS2.Core.OS;
 using System.Collections.ObjectModel;
+using Serilog;
 
 namespace SS2.Core
 {
@@ -77,25 +78,7 @@ namespace SS2.Core
 
         public LogicController()
         {
-            GameState = GameState.IDLE;
-            PlayerState = new PlayerState(2, 1, 1000);
-            DeviceState = new DeviceState(0.75, 1, 5);
-            Difficulty = new Difficulty(0.75, DeviceState, PlayerState);
-
-            GenerateNodes();
-            GenerateEdges();
-
-            nodeResponses = new NodeResponses();
-            Responses = new ObservableCollection<string>(nodeResponses.GetInitialResponses(Difficulty, DeviceState, PlayerState));
-
-            persistance = new StatePersistance();
-            persistance.SaveGame(new SavedGame() {
-                PlayerState = PlayerState,
-                GameState = GameState,
-                DeviceState = DeviceState,
-                Edges = (List<Edge>)GetEdgeList(),
-                Nodes = (List<Node>)GetNodeList()
-            });
+            LoadSavedGame();
         }
 
         public virtual void Reset()
@@ -108,6 +91,10 @@ namespace SS2.Core
             {
                 Responses.Add(res);
             }
+            using (var logger = Logging.Logger())
+            {
+                logger.Information("GAME: Game restarted!");
+            }
         }
 
         public virtual void Start()
@@ -115,8 +102,12 @@ namespace SS2.Core
             GameState = GameState.STARTED;
             PlayerState = new PlayerState(2, 1, 1000);
             DeviceState = new DeviceState(0.75, 1, 5);
-            Difficulty = new Difficulty(0.75, DeviceState, PlayerState);
+            Difficulty = new Difficulty(DeviceState, PlayerState);
             Reset();
+            using (var logger = Logging.Logger())
+            {
+                logger.Information("GAME: Game started!");
+            }
         }
 
         // Nodes
@@ -135,6 +126,10 @@ namespace SS2.Core
 
         public void OnExit()
         {
+            using (var logger = Logging.Logger())
+            {
+                logger.Information("Saving game...");
+            }
             persistance.SaveGame(new SavedGame()
             {
                 PlayerState = PlayerState,
@@ -143,6 +138,10 @@ namespace SS2.Core
                 Edges = (List<Edge>)GetEdgeList(),
                 Nodes = (List<Node>)GetNodeList()
             });
+            using (var logger = Logging.Logger())
+            {
+                logger.Information("Game saved!");
+            }
         }
 
         public virtual void OnNodeClicked(Node node)
@@ -156,14 +155,26 @@ namespace SS2.Core
             if (success)
             {
                 foundNode.Activated = true;
+                using (var logger = Logging.Logger())
+                {
+                    logger.Information("{node} activated!", node);
+                }
             }
             else
             {
                 foundNode.Failed = true;
+                using (var logger = Logging.Logger())
+                {
+                    logger.Information("{node} failed!", node);
+                }
             }
             if (!success && node.IsICE)
             {
                 GameState = GameState.FAILED;
+                using (var logger = Logging.Logger())
+                {
+                    logger.Information("GAME: Game lost with ICE {node}!", node);
+                }
             }
             Responses.Add(nodeResponses.GetRandomResponse(success));
         }
@@ -175,5 +186,74 @@ namespace SS2.Core
         public abstract void SubscribeToResponses(EventHandler eventHandler);
         public abstract void SubscribeToGameState(EventHandler<GameState> eventHandler);
 
+        private void LoadSavedGame()
+        {
+            using (var logger = Logging.Logger())
+            {
+                logger.Information("Loading saved game...");
+            }
+
+            persistance = new StatePersistance();
+            SavedGame game;
+
+            try
+            {
+                game = persistance.LoadGame();
+
+            }
+            catch (Exception ex)
+            {
+                using (var logger = Logging.Logger())
+                {
+                    logger.Error(ex, "Failed to load saved game!\nNew game will be created");
+                }
+                MakeNewGame();
+                return;
+            }
+
+            GameState = game.GameState;
+            PlayerState = game.PlayerState;
+            DeviceState = game.DeviceState;
+            Edges = new ObservableCollection<Edge>(game.Edges);
+            Nodes = new ObservableCollection<Node>(game.Nodes);
+            Difficulty = new Difficulty(DeviceState, PlayerState);
+            using (var logger = Logging.Logger())
+            {
+                logger.Information("Saved game loaded!");
+            }
+        }
+
+        private void MakeNewGame()
+        {
+            using (var logger = Logging.Logger())
+            {
+                logger.Information("Creating a new game...");
+            }
+            GameState = GameState.IDLE;
+            PlayerState = new PlayerState(2, 1, 1000);
+            DeviceState = new DeviceState(0.75, 1, 5);
+            Difficulty = new Difficulty(DeviceState, PlayerState);
+
+            GenerateNodes();
+            GenerateEdges();
+
+            nodeResponses = new NodeResponses(100);
+            Responses = new ObservableCollection<string>(nodeResponses.GetInitialResponses(Difficulty, DeviceState, PlayerState));
+
+            persistance = new StatePersistance();
+            persistance.SaveGame(new SavedGame()
+            {
+                PlayerState = PlayerState,
+                GameState = GameState,
+                DeviceState = DeviceState,
+                Edges = Edges.ToList(),
+                Nodes = Nodes.ToList(),
+                Responses = Responses.ToList()
+            });
+            using (var logger = Logging.Logger())
+            {
+                logger.Information("New game created!");
+            }
+        }
     }
 }

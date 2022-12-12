@@ -13,9 +13,9 @@ namespace SS2.Core.Logic
     {
         private Random _random;
 
-        public NodeResponses()
+        public NodeResponses(int seed)
         {
-            _random = new Random();
+            _random = new Random(seed);
         }
 
         public List<string> GetInitialResponses(Difficulty difficulty, DeviceState deviceState, PlayerState playerState)

@@ -8,9 +8,9 @@ namespace SS2.Core.Model
 {
     public class PlayerState
     {
-        public int HackSkill { get; set; }
-        public int CYBStat { get; set; }
-        public int Nanites { get; set; }
+        public int HackSkill { get; set; } = 0;
+        public int CYBStat { get; set; } = 0;
+        public int Nanites { get; set; } = 0;
 
         public PlayerState() { }
 

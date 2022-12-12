@@ -17,10 +17,10 @@
         <ItemsPanelTemplate>
           <Grid
             Name="EdgeGrid"
-            Width="150"
+            Width="145"
             Height="120"
-            ColumnDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,auto"
-            RowDefinitions="auto,auto,auto,auto,auto,auto,auto"
+            ColumnDefinitions="*,*,*,*,*,*,*,*,*"
+            RowDefinitions="*,*,*,*,*,*,*,*,*,*"
             Margin="4"></Grid>
         </ItemsPanelTemplate>
       </ItemsControl.ItemsPanel>
@@ -62,7 +62,14 @@
     <ItemsControl Name="NodesItemControl" Items="{Binding Nodes}">
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
-          <Grid Name="MyGrid" Width="150" Height="120" ColumnDefinitions="32,32,32,32,32" RowDefinitions="34,34,34,34" Margin="4"></Grid>
+          <Grid
+              Name="MyGrid"
+              Width="145"
+              Height="120"
+              ColumnDefinitions="*,*,*,*,*,*,*,*,*"
+              RowDefinitions="*,*,*,*,*,*,*,*,*,*"
+              Margin="4"
+          ></Grid>
         </ItemsPanelTemplate>
       </ItemsControl.ItemsPanel>
       <ItemsControl.ItemTemplate>

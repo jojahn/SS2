@@ -35,17 +35,21 @@ namespace SS2.AvaloniaUI.Views
 
         public void OnEvent(object? sender, EventArgs e)
         {
+            Func<int, int, int> adjustNodePositionToSpaces = (int position, int space) =>
+            {
+                return position + position * space;
+            };
             SetGridPositions("NodesItemControl",
-                (object n) => (int)((SS2.Core.Model.Node)n).Position.X,
-                (object n) => (int)((SS2.Core.Model.Node)n).Position.Y);
+                (object n) => adjustNodePositionToSpaces((int)((SS2.Core.Model.Node)n).Position.X, 1),
+                (object n) => adjustNodePositionToSpaces((int)((SS2.Core.Model.Node)n).Position.Y, 2));
             SetGridPositions("EdgesItemControl",
                 (object n) => {
                     SS2.Core.Model.Edge edge = (SS2.Core.Model.Edge)n;
-                    return (int)(edge.IsHorizontal ? edge.From.X : edge.To.X);
+                    return (int)(edge.IsHorizontal ? (2 * edge.From.X + 1) : 2 * edge.To.X);
                 },
                 (object n) => {
                     SS2.Core.Model.Edge edge = (SS2.Core.Model.Edge)n;
-                    return (int)(edge.IsHorizontal ? edge.To.Y : edge.From.Y);
+                    return (int)(edge.IsHorizontal ? (3 * edge.To.Y) : (3 * edge.From.Y + 1));
                 });
         }
 

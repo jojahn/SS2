@@ -38,5 +38,10 @@ namespace SS2.Core.Model
             Activated = false;
             Bridged = false;
         }
+
+        public override string ToString()
+        {
+            return $"Edge(Id={Id}, From=({From.X}, {From.Y}), To=({To.X}, {To.Y}), A={Activated}, B={Bridged})";
+        }
     }
 }

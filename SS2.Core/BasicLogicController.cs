@@ -6,13 +6,15 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using SS2.Core.Logic;
 using SS2.Core.Model;
+using SS2.Core.OS;
 
 namespace SS2.Core
 {
     public class BasicLogicController : LogicController
     {
-        private Random _random = new Random();
+        private Chance chance = new Chance(1200);
         private event EventHandler<GameState> _gameStateChanged;
 
 
@@ -40,6 +42,10 @@ namespace SS2.Core
                 List<Node> remainingNodes = Nodes.Where((Node node) => !node.Activated || node.Failed).ToList();
                 if (remainingNodes.Count == 0)
                 {
+                    using (var logger = Logging.Logger())
+                    {
+                        logger.Information("GAME: Game lost with no more nodes available!");
+                    }
                     return GameState.FAILED;
                 }
 
@@ -52,10 +58,16 @@ namespace SS2.Core
             List<Node> nodes = new List<Node>();
             for (int i = 0; i < NumberOfNodes; i++)
             {
-                Node node = new Node(LogicController.NodePositions[i], false, 0.5);
+                Node node = new Node(LogicController.NodePositions[i], false, 0);
+                node.Chance = chance.GetNodeDifficulty(node, Difficulty);
+                node.IsICE = chance.SetNodeAsICE(node, Difficulty);
                 nodes.Add(node);
             }
             Nodes = new ObservableCollection<Node>(nodes);
+            using (var logger = Logging.Logger())
+            {
+                logger.Information("New nodes generated!");
+            }
         }
 
         public override List<Node> GetNodeList()
@@ -72,15 +84,23 @@ namespace SS2.Core
                 Nodes.Remove(node);
                 Nodes.Add(node);
             }
+            using (var logger = Logging.Logger())
+            {
+                logger.Information("Nodes reseted!");
+            }
         }
 
         public override bool TryNode(Node node)
         {
-            return _random.NextDouble() > node.Chance;
+            return chance.TryNode(node, Difficulty);
         }
 
         public override void OnNodeClicked(Node node)
         {
+            using (var logger = Logging.Logger())
+            {
+                logger.Information("{node} clicked!", node);
+            }
             base.OnNodeClicked(node);
             Node foundNode = GetNodeById(node.Id);
             List<string> responses = Responses
@@ -98,6 +118,10 @@ namespace SS2.Core
                 .ToList();
             if (unclickedNodes.Count == 0 && GameState != GameState.WON)
             {
+                using (var logger = Logging.Logger())
+                {
+                    logger.Information("GAME: Game lost with no more nodes available!");
+                }
                 GameState = GameState.FAILED;
                 publishGameState();
             }
@@ -216,6 +240,10 @@ namespace SS2.Core
                             edge.Bridged = true;
                             Edges.Remove(edge);
                             Edges.Add(edge);
+                        }
+                        using (var logger = Logging.Logger())
+                        {
+                            logger.Information("GAME: Game won with no more nodes available!");
                         }
                         GameState = GameState.WON;
                         publishGameState();

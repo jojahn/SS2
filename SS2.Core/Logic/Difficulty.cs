@@ -15,9 +15,9 @@ namespace SS2.Core.Logic
         public double Initial { get; }
         public double Final { get; }
 
-        public Difficulty(double initial, DeviceState deviceState, PlayerState playerState)
+        public Difficulty(DeviceState deviceState, PlayerState playerState)
         {
-            Initial = initial;
+            Initial = deviceState.InitialDifficulty;
             Final = CalculateFinalDifficulty(deviceState, playerState);
         }
 
@@ -36,7 +36,7 @@ namespace SS2.Core.Logic
             double difficulty = deviceState.InitialDifficulty;
             difficulty -= ScaleCYBStat(deviceState, playerState);
             difficulty -= ScaleHackSkill(deviceState, playerState);
-            return difficulty;
+            return difficulty >= 0 ? difficulty : 0;
         }
     }
 }

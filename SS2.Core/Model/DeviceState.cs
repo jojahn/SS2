@@ -8,9 +8,9 @@ namespace SS2.Core.Model
 {
     public class DeviceState
     {
-        public double InitialDifficulty { get; set; }
-        public int ICENodes { get; set; }
-        public int Cost { get; set; }
+        public double InitialDifficulty { get; set; } = 0;
+        public int ICENodes { get; set; } = 0;
+        public int Cost { get; set; } = 0;
 
         public DeviceState() { }
 
